@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useCatalog } from "@/hooks/useCatalog";
-import { CatalogHeader } from "@/components/catalog/CatalogHeader";
+import { Navbar } from "@/components/layout/Navbar";
+import { HeroSection } from "@/components/layout/HeroSection";
 import { FilterSidebar } from "@/components/catalog/FilterSidebar";
 import { MobileFilterDrawer } from "@/components/catalog/MobileFilterDrawer";
 import { ProductGrid } from "@/components/catalog/ProductGrid";
@@ -53,8 +54,23 @@ export default function CatalogPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--background)] selection:bg-[var(--accent-subtle)] selection:text-[var(--accent-text)]">
-      {/* ── Page header ──────────────────────────────────────────── */}
-      <CatalogHeader />
+      {/* ── Top Navigation Bar ───────────────────────────────────── */}
+      <Navbar
+        onCategorySelect={(cat) => {
+          if (!catalog.filters.categories.includes(cat as ProductCategory)) {
+            catalog.toggleCategory(cat as ProductCategory);
+          }
+          const el = document.getElementById("catalog-section");
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }}
+      />
+
+      {/* ── Modern Hero Section ──────────────────────────────────── */}
+      <HeroSection
+        selectedCategories={catalog.filters.categories}
+        onSelectCategory={catalog.toggleCategory}
+        totalProductsCount={catalog.datasetPriceRange.max > 0 ? 48 : 0}
+      />
 
       {/* ── Mobile filter drawer (hidden on lg+) ─────────────────── */}
       <MobileFilterDrawer
@@ -63,9 +79,24 @@ export default function CatalogPage() {
         {...sharedFilterProps}
       />
 
-      {/* ── Main content ─────────────────────────────────────────── */}
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
-        {/* ── Top toolbar ──────────────────────────────────────────── */}
+      {/* ── Main Catalog Workspace ───────────────────────────────── */}
+      <main id="catalog-section" className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8 scroll-mt-16">
+        {/* Section Heading & Subtitle */}
+        <div className="mb-6 flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-bold tracking-tight text-[var(--text-primary)] sm:text-2xl">
+              Explore Collection
+            </h2>
+            <span className="rounded-full bg-[var(--accent-subtle)] px-2.5 py-0.5 text-xs font-bold text-[var(--accent)]">
+              {catalog.result.totalCount} Available
+            </span>
+          </div>
+          <p className="text-xs text-[var(--text-muted)]">
+            Use the filters below to refine by specific category, budget, or customer ratings.
+          </p>
+        </div>
+
+        {/* ── Toolbar Container ────────────────────────────────────── */}
         <div className="mb-5 flex flex-col gap-3 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] p-3.5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center justify-between gap-3 sm:justify-start">
             {/* Mobile-only filter button */}
@@ -109,7 +140,7 @@ export default function CatalogPage() {
 
         {/* ── Active filter chips ───────────────────────────────── */}
         {catalog.hasActiveFilters && (
-          <div className="mb-4">
+          <div className="mb-5">
             <ActiveFilters
               hasActiveFilters={catalog.hasActiveFilters}
               filterSummary={filterChips}
@@ -142,9 +173,16 @@ export default function CatalogPage() {
       </main>
 
       {/* ── Footer ───────────────────────────────────────────────── */}
-      <footer className="mt-12 border-t border-[var(--border)] bg-[var(--surface)] py-6 text-center text-xs text-[var(--text-muted)]">
-        <p className="font-medium text-[var(--text-secondary)]">Product Catalog Challenge</p>
-        <p className="mt-1">Crafted with Next.js, TypeScript & Tailwind CSS</p>
+      <footer className="mt-16 border-t border-[var(--border)] bg-[var(--surface)] py-8 text-center text-xs text-[var(--text-muted)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-[var(--text-primary)]">LUMINA Store</span>
+              <span>— Quality Verified Products</span>
+            </div>
+            <p>© 2026 LUMINA Catalog Inc. All rights reserved.</p>
+          </div>
+        </div>
       </footer>
     </div>
   );
