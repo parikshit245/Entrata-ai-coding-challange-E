@@ -1575,3 +1575,824 @@ Include:
 #### 10. Recommended Next Phase
 
 Do not implement Task 2 or the dedicated visual refinement phase yet.
+
+---
+
+## Prompt 4 — Premium Product Catalog UI/UX Refinement
+
+### Role
+
+Act as a senior product designer, UI/UX designer, design-system engineer, and senior frontend engineer specializing in Next.js, React, TypeScript, and Tailwind CSS.
+
+The functional implementation of **Task 1 — Product Catalog Filters** is now complete.
+
+Your responsibility in this phase is to transform the existing functional interface into a **high-quality, polished, aesthetically strong, professional product-catalog experience** while preserving all existing functionality.
+
+This is a dedicated visual and UX refinement phase.
+
+Do not implement Task 2.
+
+---
+
+### Primary Objective
+
+Improve the Product Catalog so that it feels like a deliberately designed modern production application rather than a basic coding-challenge interface.
+
+The final result should demonstrate:
+
+* strong visual hierarchy
+* thoughtful spacing
+* polished typography
+* cohesive color usage
+* excellent product-card design
+* intuitive filter interactions
+* clear active-state communication
+* refined controls
+* responsive behavior
+* accessibility
+* visual consistency
+* professional attention to detail
+
+The interface should look impressive immediately when opened.
+
+However, aesthetics must never break the functional requirements.
+
+---
+
+### Design Direction
+
+Create a modern, premium product-discovery/catalog experience.
+
+Aim for a visual language comparable to a polished modern SaaS/e-commerce product without copying any specific existing website.
+
+The design should feel:
+
+* clean
+* sophisticated
+* modern
+* intentional
+* spacious
+* approachable
+* premium
+* highly usable
+
+Avoid making the interface look like a generic admin dashboard.
+
+Avoid excessive decoration.
+
+Avoid visual noise.
+
+Avoid unnecessary gradients, excessive glassmorphism, excessive shadows, or random colors.
+
+Every visual element should have a purpose.
+
+---
+
+### 1. First Inspect the Existing Implementation
+
+Before modifying the UI:
+
+* inspect all current catalog components
+* inspect the current layout
+* inspect filter components
+* inspect product cards
+* inspect active-filter implementation
+* inspect sorting controls
+* inspect pagination
+* inspect responsive behavior
+* inspect existing Tailwind styles
+* inspect existing business logic
+
+Do not blindly rewrite the application.
+
+Preserve working business logic.
+
+Improve the presentation layer wherever possible.
+
+---
+
+### 2. Establish a Visual Design System
+
+Create a consistent visual language across the entire catalog.
+
+Define and consistently use:
+
+#### Color system
+
+Choose a restrained, professional palette.
+
+The palette should have:
+
+* primary/accent color
+* primary text
+* secondary text
+* muted text
+* page background
+* surface/card background
+* border color
+* success/positive state where useful
+* warning/error state where useful
+
+Do not use many unrelated colors.
+
+Interactive elements should have a clear visual hierarchy.
+
+Ensure sufficient contrast for accessibility.
+
+---
+
+#### Typography
+
+Create a clear hierarchy for:
+
+* page title
+* subtitle/description
+* section headings
+* product names
+* product metadata
+* prices
+* ratings
+* filter labels
+* result counts
+* pagination
+
+Use font sizes and weights intentionally.
+
+Do not make everything bold.
+
+Do not make every piece of text the same visual weight.
+
+---
+
+#### Spacing
+
+Use a consistent spacing rhythm.
+
+Maintain appropriate spacing between:
+
+* page sections
+* filters
+* product cards
+* controls
+* labels
+* chips
+* pagination
+* headings
+
+Avoid cramped layouts.
+
+Avoid excessive empty space that makes the interface feel unfinished.
+
+---
+
+#### Borders, Radius, and Shadows
+
+Choose a consistent design language for:
+
+* card radius
+* button radius
+* input radius
+* chip radius
+* borders
+* shadows
+
+Do not mix many unrelated styles.
+
+Prefer subtle depth over heavy shadows.
+
+---
+
+### 3. Page Header
+
+Create a polished catalog header.
+
+It should communicate:
+
+* what the catalog is
+* what the user can do
+* current result state
+
+Consider a structure such as:
+
+```text
+Product Catalog
+
+Discover products that match your preferences.
+
+24 products
+```
+
+The exact wording and layout can be improved based on the existing implementation.
+
+The header should establish visual hierarchy without consuming excessive vertical space.
+
+---
+
+### 4. Catalog Layout
+
+Create a strong desktop composition.
+
+A good structure may be:
+
+```text
+┌──────────────────────────────────────────────────────┐
+│ Header                                               │
+├──────────────────────────────────────────────────────┤
+│                                                      │
+│ Filters          Results Area                       │
+│                  Result count + sorting              │
+│                  Active filters                      │
+│                  Product grid                        │
+│                  Pagination                          │
+│                                                      │
+└──────────────────────────────────────────────────────┘
+```
+
+The exact layout is up to you.
+
+The result should feel balanced and intentional.
+
+The filter area should not visually overpower the products.
+
+The product grid should be the primary visual focus.
+
+---
+
+### 5. Filter Panel
+
+Redesign the filter interface carefully.
+
+The filters should be easy to scan and understand.
+
+Organize them into clear sections:
+
+```text
+Filters
+
+Category
+[ ...]
+
+Price
+[ Min ] — [ Max ]
+
+Rating
+[ ...]
+
+[Reset filters]
+```
+
+Use appropriate visual grouping.
+
+Make labels clear.
+
+Avoid overly complicated controls.
+
+---
+
+### 6. Category Filter
+
+Make the category control visually polished.
+
+Depending on the existing implementation, use an appropriate control such as:
+
+* radio buttons
+* checkboxes
+* segmented controls
+* select
+* custom selectable list
+
+Prioritize usability over novelty.
+
+Selected and unselected states must be immediately distinguishable.
+
+Hover and focus states should feel intentional.
+
+---
+
+### 7. Price Filter
+
+Make minimum and maximum price inputs feel like part of the same design system.
+
+Consider:
+
+```text
+Price
+
+₹ Min       ₹ Max
+┌────────┐  ┌────────┐
+│        │  │        │
+└────────┘  └────────┘
+```
+
+Inputs should have:
+
+* clear labels
+* appropriate focus state
+* consistent border/radius
+* sensible placeholder values
+* readable numbers
+
+Do not make the controls visually overwhelming.
+
+---
+
+### 8. Rating Filter
+
+Make rating selection easy to understand at a glance.
+
+Use appropriate visual treatment for stars.
+
+For example:
+
+```text
+★★★★★  4+
+★★★★☆  3+
+★★★☆☆  2+
+```
+
+Do not use decorative stars that make the actual rating control ambiguous.
+
+The selected state should be obvious.
+
+---
+
+### 9. Active Filter Chips
+
+Create polished active-filter chips.
+
+Example:
+
+```text
+Active filters
+
+[ Audio × ] [ ₹50–₹200 × ] [ 4+ ★ ]
+```
+
+Requirements:
+
+* clearly distinguish active filters
+* compact but readable
+* easy to remove
+* consistent with the design system
+* appropriate hover/focus states
+
+If there are no active filters, handle the state gracefully rather than leaving an awkward empty section.
+
+---
+
+### 10. Result Summary
+
+Create a clear result summary.
+
+For example:
+
+```text
+24 products found
+```
+
+The result count should be visually prominent enough to provide context but should not compete with the page heading.
+
+When no results exist, transition naturally into the empty state.
+
+---
+
+### 11. Sorting Control
+
+Create a polished sorting control.
+
+Example:
+
+```text
+Sort by
+[ Rating: High to Low ▾ ]
+```
+
+It should visually belong to the same control system as the filters.
+
+Ensure changing sorting continues to preserve active filters.
+
+Do not change the existing sorting logic unnecessarily.
+
+---
+
+### 12. Product Cards
+
+This is one of the most important visual areas.
+
+Design product cards that feel polished and cohesive.
+
+Each card should clearly communicate:
+
+* product name
+* category
+* price
+* rating
+
+Create a strong visual hierarchy.
+
+Consider:
+
+```text
+┌────────────────────────┐
+│                        │
+│      PRODUCT AREA      │
+│                        │
+├────────────────────────┤
+│ Category               │
+│ Product Name           │
+│ ★ 4.5                  │
+│                        │
+│ ₹1,299                 │
+└────────────────────────┘
+```
+
+The exact design should be based on the available product data.
+
+If there are no product images in the dataset, do NOT introduce an external image dependency just to decorate cards.
+
+Instead, create an elegant typography/data-focused card design.
+
+Do not invent product photography that does not belong to the dataset.
+
+---
+
+### 13. Product Grid
+
+Create a responsive product grid.
+
+It should adapt naturally across:
+
+* large desktop
+* laptop
+* tablet
+* mobile
+
+Avoid cards becoming excessively narrow or excessively wide.
+
+Maintain consistent card heights where practical.
+
+Ensure product names and metadata do not cause ugly layout shifts.
+
+---
+
+### 14. Empty State
+
+Design a polished empty state.
+
+When filters return no results, show something similar in spirit to:
+
+```text
+No products found
+
+Try adjusting or clearing your filters.
+
+[Reset filters]
+```
+
+The empty state should feel intentional rather than like a broken page.
+
+Keep it visually simple.
+
+---
+
+### 15. Pagination
+
+Redesign pagination so that it feels like part of the same product.
+
+Example:
+
+```text
+← Previous    1   2   3   4    Next →
+```
+
+Clearly communicate:
+
+* current page
+* available pages
+* disabled states
+* hover states
+* focus states
+
+Do not make pagination visually louder than the products.
+
+---
+
+### 16. Reset Filters
+
+Make the reset action easy to discover without making it visually dominant.
+
+Use appropriate styling for its importance.
+
+When filters are active, the reset action should be obvious.
+
+When there are no active filters, avoid unnecessary visual noise.
+
+---
+
+### 17. Responsive Mobile Experience
+
+This is a major requirement.
+
+Do not simply shrink the desktop layout.
+
+Design a genuinely usable mobile experience.
+
+A suitable approach is:
+
+```text
+Mobile
+
+Product Catalog
+24 products
+
+[ Filters ]       [ Sort ]
+
+Active filters
+
+Product grid
+```
+
+The filter controls can open inside a drawer or collapsible panel.
+
+The mobile filter experience should:
+
+* be easy to open
+* be easy to close
+* preserve filter state
+* provide reset functionality
+* not obstruct the entire experience unnecessarily
+* remain keyboard accessible
+
+Use Tailwind responsive utilities appropriately.
+
+---
+
+### 18. Interaction Design
+
+Add subtle interaction feedback where useful.
+
+Consider:
+
+* hover states
+* focus states
+* selected states
+* disabled states
+* button transitions
+* filter chip transitions
+* card hover treatment
+
+Keep animations subtle.
+
+Do not add animations merely because they are possible.
+
+Avoid excessive motion.
+
+Respect reduced-motion preferences where practical.
+
+---
+
+### 19. Accessibility
+
+The visual redesign must maintain or improve accessibility.
+
+Ensure:
+
+* semantic HTML
+* proper labels
+* keyboard navigation
+* visible focus states
+* sufficient contrast
+* meaningful button names
+* accessible mobile filter controls
+* pagination controls with meaningful labels
+
+Do not sacrifice accessibility for aesthetics.
+
+---
+
+### 20. Avoid Common AI-Generated UI Problems
+
+The final design MUST avoid:
+
+* excessive gradients
+* random accent colors
+* excessive rounded cards
+* excessive shadows
+* excessive glassmorphism
+* giant hero sections
+* unnecessary icons everywhere
+* inconsistent spacing
+* inconsistent border radii
+* arbitrary font sizes
+* overly saturated colors
+* generic dashboard appearance
+* visual clutter
+* unnecessary animations
+* decorative elements that do not communicate information
+
+Do not make every element look like a floating card.
+
+Use hierarchy and whitespace intentionally.
+
+---
+
+### 21. Visual Consistency Review
+
+After implementation, review the complete page as a single design system.
+
+Check:
+
+#### Typography
+
+Are headings, labels, metadata, and prices clearly differentiated?
+
+#### Color
+
+Are colors consistent and purposeful?
+
+#### Spacing
+
+Do sections share a consistent rhythm?
+
+#### Controls
+
+Do buttons, inputs, selects, chips, and pagination feel like the same product?
+
+#### Cards
+
+Do all product cards share the same visual language?
+
+#### Responsive design
+
+Does the interface remain polished at different widths?
+
+#### Accessibility
+
+Are focus states and contrast adequate?
+
+---
+
+### 22. Preserve Functionality
+
+This is critical.
+
+Do not break:
+
+* filtering
+* combined filters
+* price filtering
+* rating filtering
+* sorting
+* pagination
+* result counts
+* active filters
+* reset
+* empty state behavior
+
+Do not rewrite business logic unless necessary.
+
+If a visual change requires changing component structure, preserve the existing functional behavior.
+
+---
+
+### 23. Performance
+
+Do not add unnecessary dependencies solely for UI polish.
+
+Prefer:
+
+* Tailwind CSS
+* existing React components
+* CSS transitions
+* existing project utilities
+
+Do not introduce a large UI library unless there is a compelling reason.
+
+---
+
+### 24. Validation
+
+After completing the visual refinement:
+
+Run:
+
+```text
+TypeScript validation
+ESLint
+Tests
+Production build
+```
+
+Then manually verify:
+
+* desktop layout
+* tablet layout
+* mobile layout
+* filter interactions
+* sorting
+* pagination
+* reset
+* active filters
+* empty state
+* keyboard navigation
+
+Fix any regressions caused by the UI changes.
+
+---
+
+### 25. Screenshot-Level Quality Review
+
+Before finishing, inspect the application as if you were evaluating it visually in a frontend coding challenge.
+
+Ask:
+
+1. Does the page look professionally designed?
+2. Is the visual hierarchy immediately obvious?
+3. Is the product grid attractive and readable?
+4. Are filters easy to understand?
+5. Are active filters obvious?
+6. Is the result count easy to find?
+7. Is sorting easy to understand?
+8. Does pagination look polished?
+9. Does the mobile version feel intentionally designed?
+10. Does anything look unfinished or inconsistent?
+
+Fix obvious issues you identify.
+
+---
+
+### Scope
+
+This phase is ONLY for Task 1 UI/UX refinement.
+
+Do not:
+
+* implement Task 2
+* introduce a backend
+* introduce a database
+* change the data model unnecessarily
+* add unrelated features
+* rewrite working business logic without need
+* add unnecessary dependencies
+
+---
+
+### prompt.md Requirement
+
+Update the root `prompt.md`.
+
+Append this exact prompt under:
+
+```markdown
+## Prompt 4 — Premium Product Catalog UI/UX Refinement
+```
+
+Strict rules:
+
+* Preserve Prompt 1 exactly.
+* Preserve Prompt 2 exactly.
+* Preserve Prompt 3 exactly.
+* Append only Prompt 4.
+* Do not rewrite previous prompts.
+* Do not delete previous prompts.
+* Do not invent prompts.
+* Do not fabricate interactions.
+* Do not add future prompts.
+* Maintain chronological order.
+
+`prompt.md` must remain a professional and accurate record of the prompts actually used during development.
+
+Do not add internal commentary, time constraints, or private reasoning to `prompt.md`.
+
+---
+
+### Final Response
+
+After completing the refinement, provide:
+
+#### 1. UI/UX Improvements
+
+#### 2. Design System
+
+#### 3. Responsive Improvements
+
+#### 4. Accessibility Improvements
+
+#### 5. Interaction Improvements
+
+#### 6. Files Modified
+
+#### 7. Validation Results
+
+Report:
+
+* TypeScript
+* ESLint
+* Tests
+* Build
+
+#### 8. Remaining Visual Limitations
+
+#### 9. Recommended Next Step
+
+Do not implement Task 2.

@@ -19,9 +19,10 @@ interface FilterSidebarProps {
 /**
  * FilterSidebar
  *
- * Desktop sidebar container that composes the three filter controls.
- * On mobile this panel is hidden; the MobileFilterDrawer provides
- * the same controls in a slide-in overlay.
+ * Desktop sticky filter panel. Hidden on mobile — MobileFilterDrawer
+ * provides the same controls on smaller screens.
+ *
+ * Layout: header with reset button, then divider-separated filter sections.
  */
 export function FilterSidebar({
   filters,
@@ -37,42 +38,55 @@ export function FilterSidebar({
     <aside
       id="filter-sidebar"
       aria-label="Product filters"
-      className="hidden w-64 shrink-0 xl:w-72 lg:block"
+      className="hidden w-56 shrink-0 lg:block xl:w-60"
     >
-      <div className="rounded-lg border border-gray-200 bg-white p-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
-            Filters
-          </h2>
-          {hasActiveFilters && (
-            <button
-              type="button"
-              id="sidebar-reset-filters"
-              onClick={onReset}
-              className="text-xs text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
-              aria-label="Reset all filters"
-            >
-              Reset all
-            </button>
-          )}
-        </div>
+      {/* Sticky wrapper */}
+      <div className="sticky top-6">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]">
+          {/* Panel header */}
+          <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
+            <span className="text-sm font-semibold text-[var(--text-primary)]">
+              Filters
+            </span>
+            {hasActiveFilters && (
+              <button
+                type="button"
+                id="sidebar-reset-filters"
+                onClick={onReset}
+                className="text-xs font-medium text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                aria-label="Reset all filters"
+              >
+                Reset all
+              </button>
+            )}
+          </div>
 
-        <div className="mt-4 space-y-6">
-          <CategoryFilter
-            selected={filters.categories}
-            onToggle={onToggleCategory}
-          />
-          <PriceFilter
-            min={filters.priceRange.min}
-            max={filters.priceRange.max}
-            datasetMin={datasetMin}
-            datasetMax={datasetMax}
-            onChange={onPriceChange}
-          />
-          <RatingFilter
-            minRating={filters.minRating}
-            onChange={onRatingChange}
-          />
+          {/* Filter sections */}
+          <div className="divide-y divide-[var(--border)]">
+            <div className="px-4 py-4">
+              <CategoryFilter
+                selected={filters.categories}
+                onToggle={onToggleCategory}
+              />
+            </div>
+
+            <div className="px-4 py-4">
+              <PriceFilter
+                min={filters.priceRange.min}
+                max={filters.priceRange.max}
+                datasetMin={datasetMin}
+                datasetMax={datasetMax}
+                onChange={onPriceChange}
+              />
+            </div>
+
+            <div className="px-4 py-4">
+              <RatingFilter
+                minRating={filters.minRating}
+                onChange={onRatingChange}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </aside>

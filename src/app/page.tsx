@@ -15,17 +15,8 @@ import { FilterState, ProductCategory } from "@/types/product";
 /**
  * CatalogPage
  *
- * Root client component that:
- *   1. Owns all catalog state via useCatalog().
- *   2. Derives activeFilterChips for display.
- *   3. Distributes state and handlers to child components via props.
- *
- * State ownership:
- *   - catalog query (filters/sort/page) → useCatalog hook
- *   - isDrawerOpen (UI-only mobile state) → local useState
- *
- * All children receive their data and handlers as props.
- * No context or global state is needed — prop depth is only one level.
+ * Root client component coordinating state, responsive drawer, layout,
+ * and component tree for the product catalog.
  */
 export default function CatalogPage() {
   const catalog = useCatalog();
@@ -36,10 +27,6 @@ export default function CatalogPage() {
 
   /**
    * Remove a single filter chip by its key.
-   * Key format:
-   *   "category-{CategoryName}"  → toggle that category off
-   *   "price"                    → clear both price bounds
-   *   "rating"                   → clear min rating
    */
   function handleRemoveChip(key: string) {
     if (key.startsWith("category-")) {
@@ -65,7 +52,7 @@ export default function CatalogPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50">
+    <div className="flex min-h-screen flex-col bg-[var(--background)] selection:bg-[var(--accent-subtle)] selection:text-[var(--accent-text)]">
       {/* ── Page header ──────────────────────────────────────────── */}
       <CatalogHeader />
 
@@ -78,41 +65,46 @@ export default function CatalogPage() {
 
       {/* ── Main content ─────────────────────────────────────────── */}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
+        {/* ── Top toolbar ──────────────────────────────────────────── */}
+        <div className="mb-5 flex flex-col gap-3 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] p-3.5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center justify-between gap-3 sm:justify-start">
+            {/* Mobile-only filter button */}
+            <button
+              type="button"
+              id="mobile-filter-open"
+              onClick={() => setIsDrawerOpen(true)}
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--text-primary)] shadow-sm transition-colors hover:bg-[var(--surface-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] lg:hidden"
+              aria-expanded={isDrawerOpen}
+              aria-controls="mobile-filter-drawer"
+              aria-label="Open filters panel"
+            >
+              <svg className="h-3.5 w-3.5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              </svg>
+              <span>Filters</span>
+              {catalog.hasActiveFilters && (
+                <span
+                  className="ml-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-bold text-white"
+                  aria-label={`${filterChips.length} active filters`}
+                >
+                  {filterChips.length}
+                </span>
+              )}
+            </button>
 
-        {/* ── Top toolbar: mobile filter toggle + results + sort ─── */}
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          {/* Mobile-only filter toggle button */}
-          <button
-            type="button"
-            id="mobile-filter-open"
-            onClick={() => setIsDrawerOpen(true)}
-            className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 lg:hidden"
-            aria-expanded={isDrawerOpen}
-            aria-controls="mobile-filter-drawer"
-            aria-label="Open filters panel"
-          >
-            <span aria-hidden="true">⚙</span>
-            Filters
-            {catalog.hasActiveFilters && (
-              <span
-                className="ml-1 rounded-full bg-blue-600 px-1.5 py-0.5 text-xs font-medium text-white"
-                aria-label={`${filterChips.length} active filters`}
-              >
-                {filterChips.length}
-              </span>
-            )}
-          </button>
-
-          {/* Results summary — visible on all breakpoints */}
-          <ResultsSummary
-            totalCount={catalog.result.totalCount}
-            currentPage={catalog.result.currentPage}
-            totalPages={catalog.result.totalPages}
-            pageSize={catalog.result.pageSize}
-          />
+            {/* Results count */}
+            <ResultsSummary
+              totalCount={catalog.result.totalCount}
+              currentPage={catalog.result.currentPage}
+              totalPages={catalog.result.totalPages}
+              pageSize={catalog.result.pageSize}
+            />
+          </div>
 
           {/* Sort control */}
-          <SortControl value={catalog.sort} onChange={catalog.setSort} />
+          <div className="flex items-center justify-end">
+            <SortControl value={catalog.sort} onChange={catalog.setSort} />
+          </div>
         </div>
 
         {/* ── Active filter chips ───────────────────────────────── */}
@@ -129,7 +121,7 @@ export default function CatalogPage() {
 
         {/* ── Two-column layout: sidebar + product grid ─────────── */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-          {/* Desktop filter sidebar (hidden on mobile via CSS) */}
+          {/* Desktop filter sidebar */}
           <FilterSidebar {...sharedFilterProps} />
 
           {/* Product results area */}
@@ -150,23 +142,20 @@ export default function CatalogPage() {
       </main>
 
       {/* ── Footer ───────────────────────────────────────────────── */}
-      <footer className="border-t border-gray-200 bg-white py-4 text-center text-xs text-gray-400">
-        Product Catalog — AI Coding Challenge
+      <footer className="mt-12 border-t border-[var(--border)] bg-[var(--surface)] py-6 text-center text-xs text-[var(--text-muted)]">
+        <p className="font-medium text-[var(--text-secondary)]">Product Catalog Challenge</p>
+        <p className="mt-1">Crafted with Next.js, TypeScript & Tailwind CSS</p>
       </footer>
     </div>
   );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Helpers (module-level, not inside the component — stable across renders)
+// Helpers
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * Convert the active FilterState into a flat list of chip descriptors.
- *
- * The key for each chip encodes the filter dimension (and for categories,
- * the specific value), so handleRemoveChip can dispatch the correct setter
- * without needing a switch table here.
+ * Convert active FilterState into a flat list of chip descriptors.
  */
 function buildFilterChips(filters: FilterState): ActiveFilterChip[] {
   const chips: ActiveFilterChip[] = [];

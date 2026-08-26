@@ -12,14 +12,8 @@ interface PaginationProps {
 /**
  * Pagination
  *
- * Renders previous/next controls plus page number buttons.
- * Hidden when there is only 1 page.
- *
- * Accessibility:
- *   - Wrapped in a <nav> with aria-label="Pagination".
- *   - Current page button has aria-current="page".
- *   - Disabled buttons carry aria-disabled="true".
- *   - All buttons have descriptive aria-labels.
+ * Polished pagination bar with subtle active state, accessible buttons,
+ * and elegant keyboard interactions.
  */
 export function Pagination({
   currentPage,
@@ -34,7 +28,7 @@ export function Pagination({
     <nav
       id="pagination"
       aria-label="Pagination"
-      className="flex items-center justify-center gap-1 pt-6"
+      className="mt-8 flex items-center justify-center gap-1.5 border-t border-[var(--border)] pt-6"
     >
       {/* Previous */}
       <button
@@ -43,38 +37,43 @@ export function Pagination({
         disabled={currentPage === 1}
         aria-label="Go to previous page"
         aria-disabled={currentPage === 1}
-        className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="flex items-center gap-1 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] shadow-sm transition-colors hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] disabled:pointer-events-none disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
       >
-        ← Prev
+        <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        <span>Prev</span>
       </button>
 
       {/* Page numbers */}
-      {pages.map((item, idx) =>
-        item === "ellipsis" ? (
-          <span
-            key={`ellipsis-${idx}`}
-            className="px-2 text-gray-400"
-            aria-hidden="true"
-          >
-            …
-          </span>
-        ) : (
-          <button
-            key={item}
-            type="button"
-            onClick={() => onPageChange(item)}
-            aria-label={`Go to page ${item}`}
-            aria-current={item === currentPage ? "page" : undefined}
-            className={`min-w-[36px] rounded-md border px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              item === currentPage
-                ? "border-blue-600 bg-blue-600 font-semibold text-white"
-                : "border-gray-300 text-gray-700 hover:bg-gray-50"
-            }`}
-          >
-            {item}
-          </button>
-        ),
-      )}
+      <div className="flex items-center gap-1">
+        {pages.map((item, idx) =>
+          item === "ellipsis" ? (
+            <span
+              key={`ellipsis-${idx}`}
+              className="px-2 text-xs text-[var(--text-muted)] select-none"
+              aria-hidden="true"
+            >
+              …
+            </span>
+          ) : (
+            <button
+              key={item}
+              type="button"
+              onClick={() => onPageChange(item)}
+              aria-label={`Go to page ${item}`}
+              aria-current={item === currentPage ? "page" : undefined}
+              className={`min-w-[32px] rounded-[var(--radius-sm)] px-2.5 py-1.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent)] ${
+                item === currentPage
+                  ? "bg-[var(--accent)] text-white shadow-sm"
+                  : "border border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)]"
+              }`}
+            >
+              {item}
+            </button>
+          ),
+        )}
+      </div>
 
       {/* Next */}
       <button
@@ -83,9 +82,12 @@ export function Pagination({
         disabled={currentPage === totalPages}
         aria-label="Go to next page"
         aria-disabled={currentPage === totalPages}
-        className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="flex items-center gap-1 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] shadow-sm transition-colors hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] disabled:pointer-events-none disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
       >
-        Next →
+        <span>Next</span>
+        <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+        </svg>
       </button>
     </nav>
   );
@@ -93,7 +95,6 @@ export function Pagination({
 
 /**
  * Build a windowed page range with ellipsis markers.
- * e.g. [1, "ellipsis", 4, 5, 6, "ellipsis", 10]
  */
 function buildPageRange(
   current: number,

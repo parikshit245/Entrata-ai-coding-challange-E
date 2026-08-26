@@ -1,52 +1,84 @@
 "use client";
 
-const RATING_OPTIONS = [4.5, 4.0, 3.5, 3.0] as const;
+const RATING_OPTIONS = [
+  { value: 4.5, label: "4.5+ stars", stars: 5 },
+  { value: 4.0, label: "4.0+ stars", stars: 4 },
+  { value: 3.5, label: "3.5+ stars", stars: 4 },
+  { value: 3.0, label: "3.0+ stars", stars: 3 },
+] as const;
 
 interface RatingFilterProps {
-  /** Currently active minimum rating (null = any). */
   minRating: number | null;
-  /** Called when the user selects or deselects a minimum rating. */
   onChange: (rating: number | null) => void;
 }
 
 /**
  * RatingFilter
  *
- * Radio-style buttons for selecting a minimum star rating.
- * Clicking the active selection again clears it (acts as a toggle).
+ * Radio-style minimum rating selector.
+ * Clicking the active option again clears it (toggle behaviour).
  *
- * Accessibility:
- *   - Native <input type="radio"> — keyboard navigable with arrow keys.
- *   - Wrapped in <fieldset> / <legend>.
- *   - Each option's aria-label includes the star count for screen readers.
+ * Each option shows filled/empty stars so the threshold is immediately
+ * understandable at a glance.
  */
 export function RatingFilter({ minRating, onChange }: RatingFilterProps) {
   return (
-    <fieldset>
-      <legend className="text-sm font-semibold text-gray-700">
+    <fieldset className="border-none p-0">
+      <legend className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
         Minimum Rating
       </legend>
-      <div className="mt-2 space-y-2">
-        {RATING_OPTIONS.map((rating) => {
-          const id = `rating-${rating}`;
-          const isSelected = minRating === rating;
+
+      <div className="mt-3 space-y-1">
+        {RATING_OPTIONS.map((option) => {
+          const isSelected = minRating === option.value;
+          const id = `rating-${option.value}`;
+
           return (
             <label
-              key={rating}
+              key={option.value}
               htmlFor={id}
-              className="flex cursor-pointer items-center gap-2 text-sm text-gray-700 hover:text-gray-900"
+              className={`flex cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] px-2.5 py-2 text-sm transition-colors duration-100 ${
+                isSelected
+                  ? "bg-[var(--accent-subtle)] text-[var(--accent-text)] font-medium"
+                  : "text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)]"
+              }`}
             >
+              {/* Custom radio indicator */}
+              <span
+                className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors duration-100 ${
+                  isSelected
+                    ? "border-[var(--accent)] bg-[var(--accent)]"
+                    : "border-[var(--border-strong)] bg-white"
+                }`}
+                aria-hidden="true"
+              >
+                {isSelected && (
+                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                )}
+              </span>
+
               <input
                 type="radio"
                 id={id}
                 name="min-rating"
                 checked={isSelected}
-                onChange={() => onChange(isSelected ? null : rating)}
-                className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
-                aria-label={`${rating} stars and above`}
+                onChange={() => onChange(isSelected ? null : option.value)}
+                className="sr-only"
+                aria-label={option.label}
               />
-              <span className="text-yellow-400">{"★".repeat(Math.floor(rating))}</span>
-              <span>{rating}+ stars</span>
+
+              {/* Star display */}
+              <span
+                className="text-sm tracking-tight text-[var(--star)]"
+                aria-hidden="true"
+              >
+                {"★".repeat(option.stars)}
+                {"☆".repeat(5 - option.stars)}
+              </span>
+
+              <span className={isSelected ? "" : "text-[var(--text-secondary)]"}>
+                {option.value}+
+              </span>
             </label>
           );
         })}

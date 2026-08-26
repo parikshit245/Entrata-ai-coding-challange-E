@@ -12,16 +12,7 @@ interface ProductGridProps {
 /**
  * ProductGrid
  *
- * Renders a responsive grid of ProductCard components.
- *
- * Empty state:
- *   - When no products match the active query, shows a clear message.
- *   - If filters are active, offers a "Reset filters" button so the user
- *     can return to the full catalog without hunting for the sidebar reset.
- *
- * Accessibility:
- *   - aria-live="polite" on the section announces updates to screen readers
- *     after filter or page changes without being disruptive.
+ * Responsive grid for displaying ProductCard instances with a thoughtful empty state.
  */
 export function ProductGrid({
   products,
@@ -33,23 +24,28 @@ export function ProductGrid({
       <div
         id="product-grid-empty"
         role="status"
-        className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-white py-16 text-center"
+        className="flex min-h-[320px] flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-[var(--border-strong)] bg-[var(--surface)] p-8 text-center"
       >
-        <p className="text-lg font-medium text-gray-500">No products found.</p>
-        <p className="mt-1 text-sm text-gray-400">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--surface-subtle)] text-[var(--text-muted)] mb-3">
+          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <p className="text-base font-semibold text-[var(--text-primary)]">No products match your criteria</p>
+        <p className="mt-1 max-w-sm text-xs text-[var(--text-muted)]">
           {hasActiveFilters
-            ? "No products match your current filters."
-            : "The catalog appears to be empty."}
+            ? "Try loosening or removing some of your filters to discover more items."
+            : "No products are currently available in the catalog."}
         </p>
         {hasActiveFilters && onReset && (
           <button
             type="button"
             id="empty-state-reset"
             onClick={onReset}
-            className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            aria-label="Reset all filters to see all products"
+            className="mt-5 inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-[var(--accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
+            aria-label="Reset all filters to view all products"
           >
-            Reset filters
+            Clear all filters
           </button>
         )}
       </div>
@@ -62,7 +58,7 @@ export function ProductGrid({
       aria-label="Product results"
       aria-live="polite"
       aria-atomic="false"
-      className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3"
+      className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
     >
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />

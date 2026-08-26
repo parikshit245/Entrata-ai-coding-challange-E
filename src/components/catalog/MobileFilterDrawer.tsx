@@ -21,18 +21,13 @@ interface MobileFilterDrawerProps {
 /**
  * MobileFilterDrawer
  *
- * A slide-in overlay panel for mobile filter access.
- * Visible only on screens smaller than lg (below 1024px).
+ * Full-height slide-in overlay for mobile filter access (< lg breakpoint).
+ * Shares the same filter control components as FilterSidebar.
  *
  * Accessibility:
- *   - role="dialog" with aria-modal="true" traps focus.
- *   - aria-label identifies the dialog purpose.
- *   - Close button has descriptive aria-label.
- *   - Backdrop click also closes the drawer.
- *
- * Architecture note:
- *   The drawer shares the same filter control components as FilterSidebar.
- *   Both receive props from useCatalog — no duplicated state.
+ *   - role="dialog" + aria-modal="true"
+ *   - Backdrop click closes drawer
+ *   - Close button at top-right
  */
 export function MobileFilterDrawer({
   isOpen,
@@ -50,9 +45,9 @@ export function MobileFilterDrawer({
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Dimmed backdrop */}
       <div
-        className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+        className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm lg:hidden"
         aria-hidden="true"
         onClick={onClose}
       />
@@ -63,31 +58,43 @@ export function MobileFilterDrawer({
         role="dialog"
         aria-modal="true"
         aria-label="Product filters"
-        className="fixed inset-y-0 left-0 z-50 flex w-80 max-w-full flex-col bg-white shadow-xl lg:hidden"
+        className="fixed inset-y-0 left-0 z-50 flex w-80 max-w-[90vw] flex-col bg-[var(--surface)] shadow-2xl lg:hidden"
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
+        <div className="flex items-center justify-between border-b border-[var(--border)] px-5 py-4">
+          <span className="text-sm font-semibold text-[var(--text-primary)]">
             Filters
-          </h2>
+          </span>
           <button
             type="button"
             id="mobile-filter-close"
             onClick={onClose}
             aria-label="Close filters panel"
-            className="rounded-md p-1 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-[var(--text-muted)] transition-colors hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           >
-            ✕
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              <line x1="3" y1="3" x2="13" y2="13" />
+              <line x1="13" y1="3" x2="3" y2="13" />
+            </svg>
           </button>
         </div>
 
-        {/* Filter controls */}
-        <div className="flex-1 overflow-y-auto p-4">
-          <div className="space-y-6">
+        {/* Scrollable filter sections */}
+        <div className="flex-1 divide-y divide-[var(--border)] overflow-y-auto">
+          <div className="px-5 py-4">
             <CategoryFilter
               selected={filters.categories}
               onToggle={onToggleCategory}
             />
+          </div>
+          <div className="px-5 py-4">
             <PriceFilter
               min={filters.priceRange.min}
               max={filters.priceRange.max}
@@ -95,6 +102,8 @@ export function MobileFilterDrawer({
               datasetMax={datasetMax}
               onChange={onPriceChange}
             />
+          </div>
+          <div className="px-5 py-4">
             <RatingFilter
               minRating={filters.minRating}
               onChange={onRatingChange}
@@ -102,31 +111,33 @@ export function MobileFilterDrawer({
           </div>
         </div>
 
-        {/* Footer actions */}
-        <div className="flex gap-3 border-t border-gray-200 p-4">
-          {hasActiveFilters && (
+        {/* Sticky footer actions */}
+        <div className="border-t border-[var(--border)] bg-[var(--surface)] px-5 py-4">
+          <div className="flex gap-2">
+            {hasActiveFilters && (
+              <button
+                type="button"
+                id="mobile-reset-filters"
+                onClick={() => {
+                  onReset();
+                  onClose();
+                }}
+                className="flex-1 rounded-[var(--radius-md)] border border-[var(--border-strong)] py-2.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-subtle)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                aria-label="Reset all filters"
+              >
+                Reset
+              </button>
+            )}
             <button
               type="button"
-              id="mobile-reset-filters"
-              onClick={() => {
-                onReset();
-                onClose();
-              }}
-              className="flex-1 rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Reset all filters"
+              id="mobile-filter-apply"
+              onClick={onClose}
+              className="flex-1 rounded-[var(--radius-md)] bg-[var(--accent)] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2"
+              aria-label="Apply filters and see results"
             >
-              Reset all
+              Show results
             </button>
-          )}
-          <button
-            type="button"
-            id="mobile-filter-apply"
-            onClick={onClose}
-            className="flex-1 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            aria-label="Apply filters and close"
-          >
-            Show results
-          </button>
+          </div>
         </div>
       </div>
     </>

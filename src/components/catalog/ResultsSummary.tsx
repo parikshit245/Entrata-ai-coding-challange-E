@@ -14,11 +14,7 @@ interface ResultsSummaryProps {
 /**
  * ResultsSummary
  *
- * Displays a human-readable summary of the current result state.
- * e.g. "Showing 1–12 of 48 products"
- *
- * Uses aria-live="polite" so screen readers announce updates after filter
- * or page changes without interrupting the user.
+ * Clean and compact count summary that integrates smoothly into the toolbar.
  */
 export function ResultsSummary({
   totalCount,
@@ -30,31 +26,25 @@ export function ResultsSummary({
   const end = Math.min(currentPage * pageSize, totalCount);
 
   return (
-    <p
+    <div
       id="results-summary"
-      className="text-sm text-gray-500"
+      className="text-xs text-[var(--text-secondary)]"
       aria-live="polite"
       aria-atomic="true"
     >
       {totalCount === 0 ? (
-        "No products found."
+        <span className="font-medium text-[var(--text-muted)]">No products matching criteria</span>
       ) : (
-        <>
-          Showing{" "}
-          <span className="font-semibold text-gray-700">
-            {start}–{end}
-          </span>{" "}
-          of{" "}
-          <span className="font-semibold text-gray-700">{totalCount}</span>{" "}
-          product{totalCount === 1 ? "" : "s"}
+        <div className="flex items-center gap-1.5">
+          <span className="font-semibold text-[var(--text-primary)]">{totalCount}</span>
+          <span>{totalCount === 1 ? "product" : "products"} found</span>
           {totalPages > 1 && (
-            <span className="text-gray-400">
-              {" "}
-              (page {currentPage} of {totalPages})
+            <span className="text-[var(--text-muted)]">
+              (showing {start}–{end})
             </span>
           )}
-        </>
+        </div>
       )}
-    </p>
+    </div>
   );
 }
