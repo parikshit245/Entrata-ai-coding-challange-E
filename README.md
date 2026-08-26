@@ -27,15 +27,15 @@ The application isolates **pure computational business logic** from **UI present
 
 ```mermaid
 flowchart TD
-    A[📦 Raw Product Dataset\n48 Products] --> B[🔍 Step 1: filterProducts\nCategory + Price Range + Rating]
-    B --> C[📊 Step 2: Calculate Filtered Count\ntotalCount = filtered.length]
-    C --> D[🔄 Step 3: sortProducts\nRelevance | Price Asc/Desc | Rating | Name]
-    D --> E[📑 Step 4: paginateProducts\nWindow slicing + Page Clamping]
-    E --> F[🎨 Render CatalogPage\nProductGrid, ActiveFilters, Pagination, Summary]
+    A["Raw Product Dataset (48 Products)"] --> B["Step 1: filterProducts<br/>Category + Price Range + Rating"]
+    B --> C["Step 2: Calculate Filtered Count<br/>totalCount = filtered.length"]
+    C --> D["Step 3: sortProducts<br/>Relevance, Price Asc/Desc, Rating, Name"]
+    D --> E["Step 4: paginateProducts<br/>Window slicing + Page Clamping"]
+    E --> F["Render CatalogPage<br/>ProductGrid, ActiveFilters, Pagination, Summary"]
     
-    subgraph State Management
-        Q[CatalogQuery State\nfilters, sort, page, pageSize] -->|useMemo| Pipeline[applyCatalogQuery]
-        Pipeline --> R[CatalogResult\nproducts, totalCount, totalPages, currentPage]
+    subgraph StateManagement ["State Management"]
+        Q["CatalogQuery State<br/>filters, sort, page, pageSize"] -->|useMemo| Pipeline["applyCatalogQuery"]
+        Pipeline --> R["CatalogResult<br/>products, totalCount, totalPages, currentPage"]
     end
 ```
 
