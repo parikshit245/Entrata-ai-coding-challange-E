@@ -7,11 +7,10 @@ import { FilterSidebar } from "@/components/catalog/FilterSidebar";
 import { MobileFilterDrawer } from "@/components/catalog/MobileFilterDrawer";
 import { ProductGrid } from "@/components/catalog/ProductGrid";
 import { SortControl } from "@/components/catalog/SortControl";
-import { ActiveFilters } from "@/components/catalog/ActiveFilters";
+import { ActiveFilters, type ActiveFilterChip } from "@/components/catalog/ActiveFilters";
 import { ResultsSummary } from "@/components/catalog/ResultsSummary";
 import { Pagination } from "@/components/catalog/Pagination";
-import { ProductCategory } from "@/types/product";
-import { type ActiveFilterChip } from "@/components/catalog/ActiveFilters";
+import { FilterState, ProductCategory } from "@/types/product";
 
 /**
  * CatalogPage
@@ -21,13 +20,12 @@ import { type ActiveFilterChip } from "@/components/catalog/ActiveFilters";
  *   2. Derives activeFilterChips for display.
  *   3. Distributes state and handlers to child components via props.
  *
- * Why this is a single "use client" component:
- *   All children receive their data as props from this component.
- *   There is no need for context or global state — prop depth is shallow
- *   (one level from CatalogPage to leaf components via FilterSidebar/Grid).
+ * State ownership:
+ *   - catalog query (filters/sort/page) → useCatalog hook
+ *   - isDrawerOpen (UI-only mobile state) → local useState
  *
- * Mobile filter drawer state (isDrawerOpen) is kept local here because
- * it is UI-only and does not affect the catalog query.
+ * All children receive their data and handlers as props.
+ * No context or global state is needed — prop depth is only one level.
  */
 export default function CatalogPage() {
   const catalog = useCatalog();
@@ -38,7 +36,10 @@ export default function CatalogPage() {
 
   /**
    * Remove a single filter chip by its key.
-   * Each key encodes the filter type (and for categories, the value).
+   * Key format:
+   *   "category-{CategoryName}"  → toggle that category off
+   *   "price"                    → clear both price bounds
+   *   "rating"                   → clear min rating
    */
   function handleRemoveChip(key: string) {
     if (key.startsWith("category-")) {
@@ -51,6 +52,7 @@ export default function CatalogPage() {
     }
   }
 
+  // Shared props passed to both FilterSidebar and MobileFilterDrawer
   const sharedFilterProps = {
     filters: catalog.filters,
     datasetMin: catalog.datasetPriceRange.min,
@@ -63,22 +65,23 @@ export default function CatalogPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-gray-50">
       {/* ── Page header ──────────────────────────────────────────── */}
       <CatalogHeader />
 
-      {/* ── Mobile filter drawer ──────────────────────────────────── */}
+      {/* ── Mobile filter drawer (hidden on lg+) ─────────────────── */}
       <MobileFilterDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
         {...sharedFilterProps}
       />
 
-      {/* ── Main content area ─────────────────────────────────────── */}
+      {/* ── Main content ─────────────────────────────────────────── */}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
-        {/* ── Toolbar row: mobile filter button + sort ─────────── */}
+
+        {/* ── Top toolbar: mobile filter toggle + results + sort ─── */}
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          {/* Mobile filter toggle */}
+          {/* Mobile-only filter toggle button */}
           <button
             type="button"
             id="mobile-filter-open"
@@ -86,7 +89,7 @@ export default function CatalogPage() {
             className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 lg:hidden"
             aria-expanded={isDrawerOpen}
             aria-controls="mobile-filter-drawer"
-            aria-label="Open filters"
+            aria-label="Open filters panel"
           >
             <span aria-hidden="true">⚙</span>
             Filters
@@ -100,7 +103,7 @@ export default function CatalogPage() {
             )}
           </button>
 
-          {/* Results summary */}
+          {/* Results summary — visible on all breakpoints */}
           <ResultsSummary
             totalCount={catalog.result.totalCount}
             currentPage={catalog.result.currentPage}
@@ -124,14 +127,18 @@ export default function CatalogPage() {
           </div>
         )}
 
-        {/* ── Two-column layout: sidebar + grid ─────────────────── */}
+        {/* ── Two-column layout: sidebar + product grid ─────────── */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-          {/* Desktop filter sidebar */}
+          {/* Desktop filter sidebar (hidden on mobile via CSS) */}
           <FilterSidebar {...sharedFilterProps} />
 
-          {/* Product grid + pagination */}
+          {/* Product results area */}
           <div className="min-w-0 flex-1">
-            <ProductGrid products={catalog.result.products} />
+            <ProductGrid
+              products={catalog.result.products}
+              onReset={catalog.resetAll}
+              hasActiveFilters={catalog.hasActiveFilters}
+            />
 
             <Pagination
               currentPage={catalog.result.currentPage}
@@ -151,15 +158,15 @@ export default function CatalogPage() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Helpers
+// Helpers (module-level, not inside the component — stable across renders)
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { FilterState } from "@/types/product";
-
 /**
- * Convert the active filter state into a flat list of chip descriptors.
- * The key encodes both the filter type and (for categories) the specific value,
- * allowing handleRemoveChip to dispatch the correct setter.
+ * Convert the active FilterState into a flat list of chip descriptors.
+ *
+ * The key for each chip encodes the filter dimension (and for categories,
+ * the specific value), so handleRemoveChip can dispatch the correct setter
+ * without needing a switch table here.
  */
 function buildFilterChips(filters: FilterState): ActiveFilterChip[] {
   const chips: ActiveFilterChip[] = [];
@@ -178,7 +185,7 @@ function buildFilterChips(filters: FilterState): ActiveFilterChip[] {
         ? `$${min} – $${max}`
         : min !== null
           ? `≥ $${min}`
-          : `≤ $${max}`;
+          : `≤ $${max!}`;
     chips.push({ key: "price", label });
   }
 

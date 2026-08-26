@@ -970,3 +970,608 @@ Return:
 
 Do not implement the complete Product Catalog feature yet.
 Do not work on Task 2.
+
+---
+
+## Prompt 3 — Product Catalog Functional MVP Implementation
+
+### Role
+
+Act as a senior frontend engineer specializing in Next.js, React, TypeScript, and production-quality application development.
+
+The project foundation and architecture for Task 1 have already been established.
+
+Your objective in this phase is to implement the **complete functional MVP** of Task 1 — Product Catalog Filters.
+
+Focus on correctness, maintainability, and complete functional behavior.
+
+Do not work on Task 2.
+
+Do not spend significant effort on visual decoration or advanced UI polish in this phase. A dedicated UI/UX refinement phase will follow.
+
+---
+
+### Task Requirements
+
+Implement a Product Catalog based on the existing static/mock product dataset.
+
+The catalog must support:
+
+* Category filtering
+* Minimum price filtering
+* Maximum price filtering
+* Minimum rating filtering
+* Combining multiple filters correctly
+* Sorting
+* Pagination
+* Result count
+* Active filter visibility
+* Filter reset
+* Preservation of filter and sorting state during pagination
+* Responsive usability
+
+The implementation must satisfy the actual challenge requirements without adding speculative functionality.
+
+---
+
+### Functional Processing Pipeline
+
+Implement the catalog processing flow using a clear and deterministic pipeline:
+
+```text
+Product Dataset
+      ↓
+Apply active filters
+      ↓
+Calculate filtered result count
+      ↓
+Sort filtered results
+      ↓
+Calculate pagination
+      ↓
+Select current page
+      ↓
+Render products
+```
+
+Filtering must occur before pagination.
+
+Sorting must occur before pagination.
+
+The original product dataset must never be mutated.
+
+---
+
+### 1. Product Rendering
+
+Create a reusable product presentation component.
+
+Each product should display at minimum:
+
+* product name
+* category
+* price
+* rating
+
+Use the existing Product TypeScript type and mock dataset.
+
+Do not duplicate product data inside components.
+
+---
+
+### 2. Category Filtering
+
+Implement category filtering using the categories represented in the dataset.
+
+Provide an appropriate option for:
+
+```text
+All Categories
+```
+
+and the individual categories.
+
+When a category is selected, only products belonging to that category should remain.
+
+The implementation should derive categories from the dataset where practical rather than unnecessarily hardcoding them.
+
+---
+
+### 3. Price Range Filtering
+
+Implement:
+
+* minimum price
+* maximum price
+
+Support:
+
+```text
+minimum only
+maximum only
+minimum + maximum
+no price filter
+```
+
+Define and enforce sensible behavior when:
+
+```text
+minimum price > maximum price
+```
+
+Do not silently produce confusing results.
+
+Use appropriate numeric validation.
+
+---
+
+### 4. Rating Filtering
+
+Implement a minimum-rating filter.
+
+For example:
+
+```text
+All Ratings
+4+ stars
+3+ stars
+2+ stars
+```
+
+Only products satisfying the selected minimum rating should remain.
+
+Ensure the comparison behavior is consistent at boundary values.
+
+---
+
+### 5. Combined Filtering
+
+All active filters must be applied together using AND semantics.
+
+For example:
+
+```text
+Category = Audio
+AND
+Price >= 50
+AND
+Price <= 200
+AND
+Rating >= 4
+```
+
+must return only products satisfying every active condition.
+
+Changing one filter must not accidentally remove or overwrite the other active filters.
+
+---
+
+### 6. Sorting
+
+Implement appropriate sorting options, including at minimum:
+
+```text
+Default
+Price: Low to High
+Price: High to Low
+Rating: High to Low
+Name: A to Z
+```
+
+Sorting must operate on the filtered dataset.
+
+Changing sorting must preserve all active filters.
+
+Ensure sorting does not mutate the original dataset.
+
+Ensure sorting is deterministic.
+
+---
+
+### 7. Pagination
+
+Implement pagination over the filtered and sorted results.
+
+Include:
+
+* current page
+* total pages
+* previous control
+* next control
+* page numbers where appropriate
+* sensible page size
+
+The pagination calculation must use the number of filtered results.
+
+For example:
+
+```text
+Original products: 50
+Filtered products: 17
+Page size: 6
+Total pages: 3
+```
+
+The UI should correctly represent this state.
+
+---
+
+### 8. Query State Behavior
+
+Implement predictable state transitions.
+
+#### Filter change
+
+When a filter changes, reset the current page to the first page.
+
+Do not reset unrelated filters.
+
+#### Sorting change
+
+When sorting changes, preserve the active filters.
+
+Reset pagination if necessary to ensure the user starts from a valid page.
+
+#### Pagination change
+
+When changing pages, preserve:
+
+* category
+* minimum price
+* maximum price
+* minimum rating
+* sorting
+
+#### Reset
+
+Reset all filter state, sorting, and pagination to sensible defaults.
+
+---
+
+### 9. Invalid Pagination State
+
+Handle situations such as:
+
+```text
+Current page = 5
+
+User applies a filter
+
+Filtered dataset only has 2 pages
+```
+
+The implementation must prevent the UI from remaining on an invalid page.
+
+The resulting state should always point to a valid page.
+
+---
+
+### 10. Result Count
+
+Display the number of products matching the current filters.
+
+The count must represent the entire filtered result set rather than only the currently visible page.
+
+Examples:
+
+```text
+24 products found
+```
+
+or:
+
+```text
+1 product found
+```
+
+or:
+
+```text
+No products found
+```
+
+---
+
+### 11. Active Filters
+
+Display the currently active filters clearly.
+
+For example:
+
+```text
+Active Filters
+
+[Audio ×] [₹50–₹200 ×] [4+ ★]
+```
+
+The implementation should make it obvious to the user which filters are currently affecting the results.
+
+If removing individual active filters fits naturally into the existing architecture, implement it.
+
+---
+
+### 12. Reset Filters
+
+Provide a clear reset action.
+
+Resetting must restore:
+
+* category
+* minimum price
+* maximum price
+* minimum rating
+* sorting
+* page
+
+to their default states.
+
+The complete dataset should become visible again.
+
+---
+
+### 13. Empty State
+
+Implement a clear empty-result state.
+
+When no products match the active query:
+
+* show that no products were found
+* make the state understandable
+* provide an obvious way to reset filters
+
+Do not leave the user with a blank product grid.
+
+---
+
+### 14. Responsive Functional Structure
+
+Ensure the functional filter controls can be used on:
+
+* desktop
+* tablet
+* mobile
+
+The UI does not need final visual polish yet, but the underlying component structure must support a responsive filter experience.
+
+A mobile filter drawer/collapsible filter panel may be used during the later UI refinement phase.
+
+---
+
+### 15. Business Logic
+
+Keep catalog business logic independently testable.
+
+Use pure functions or equivalent well-defined utilities for:
+
+* filtering
+* sorting
+* pagination
+
+The business logic should:
+
+* be deterministic
+* avoid mutating input data
+* have explicit TypeScript types
+* be independent from React rendering where practical
+
+Do not create unnecessary abstraction layers.
+
+---
+
+### 16. Testing
+
+Add meaningful tests for the core functionality.
+
+At minimum cover:
+
+#### Filtering
+
+* category
+* minimum price
+* maximum price
+* rating
+* multiple filters together
+
+#### Sorting
+
+* price ascending
+* price descending
+* rating
+* name
+
+#### Pagination
+
+* first page
+* middle page
+* last page
+* filtered result pagination
+* total page calculation
+
+#### State behavior
+
+* filter change resets page
+* sorting preserves filters
+* pagination preserves query state
+* reset restores defaults
+
+#### Edge cases
+
+* no results
+* invalid price range
+* boundary values
+* invalid page
+
+Prefer high-value tests over artificially increasing test count.
+
+---
+
+### 17. Code Quality
+
+Maintain:
+
+* strict TypeScript typing
+* clear naming
+* focused components
+* reusable business logic
+* no duplicated filtering/sorting logic
+* no unnecessary dependencies
+* no unnecessary state
+* no mutation of source data
+* clean separation between presentation and business logic
+
+Do not refactor unrelated parts of the project.
+
+---
+
+### 18. Validation
+
+After implementation, run the project's appropriate validation commands.
+
+At minimum verify:
+
+```text
+TypeScript
+ESLint
+Unit Tests
+Production Build
+```
+
+Fix errors caused by this implementation.
+
+Verify the application can start successfully.
+
+---
+
+### 19. Functional Acceptance Scenarios
+
+Manually verify these scenarios:
+
+#### Scenario 1
+
+No filters → all products are visible.
+
+#### Scenario 2
+
+Category filter → only matching products are visible.
+
+#### Scenario 3
+
+Minimum price → only products at or above the minimum are visible.
+
+#### Scenario 4
+
+Maximum price → only products at or below the maximum are visible.
+
+#### Scenario 5
+
+Minimum + maximum price → only products within the range are visible.
+
+#### Scenario 6
+
+Minimum rating → only products meeting the rating threshold are visible.
+
+#### Scenario 7
+
+Category + price + rating → all conditions are applied simultaneously.
+
+#### Scenario 8
+
+Sort while filters are active → filters remain active.
+
+#### Scenario 9
+
+Navigate between pages while filters are active → query state remains intact.
+
+#### Scenario 10
+
+Apply a restrictive filter from a later page → pagination returns to a valid page.
+
+#### Scenario 11
+
+Reset filters → catalog returns to the initial state.
+
+#### Scenario 12
+
+No matching products → clear empty state is displayed.
+
+---
+
+### Scope Control
+
+Do not implement:
+
+* Task 2
+* backend services
+* databases
+* authentication
+* external APIs
+* unnecessary state-management libraries
+* speculative features
+* complex animations
+* unnecessary architectural abstractions
+
+The goal of this phase is a **complete and reliable functional MVP**.
+
+A separate prompt will be used for visual/UI/UX refinement.
+
+---
+
+### prompt.md Requirement
+
+The repository must maintain a root-level `prompt.md` containing the exact prompts actually used during the challenge.
+
+Append this exact prompt under:
+
+```markdown
+## Prompt 3 — Product Catalog Functional MVP Implementation
+```
+
+Rules:
+
+* Preserve Prompt 1 exactly.
+* Preserve Prompt 2 exactly.
+* Append Prompt 3 exactly.
+* Do not rewrite previous prompts.
+* Do not invent prompts.
+* Do not add future prompts.
+* Do not fabricate interactions.
+* Maintain chronological order.
+
+Do not add time estimates, internal discussion, or commentary to the prompt log.
+
+The file must remain a professional and factual record of the AI prompts used during development.
+
+---
+
+### Final Response
+
+After implementation, provide:
+
+#### 1. Implemented Functionality
+
+#### 2. Filtering Logic
+
+#### 3. Sorting Logic
+
+#### 4. Pagination Logic
+
+#### 5. State Management
+
+#### 6. Tests Added
+
+#### 7. Validation Results
+
+Include:
+
+* TypeScript
+* ESLint
+* Tests
+* Build
+
+#### 8. Files Created/Modified
+
+#### 9. Known Limitations
+
+#### 10. Recommended Next Phase
+
+Do not implement Task 2 or the dedicated visual refinement phase yet.
