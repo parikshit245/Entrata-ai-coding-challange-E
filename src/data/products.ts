@@ -1,0 +1,494 @@
+import { Product } from "@/types/product";
+
+/**
+ * Static mock product dataset.
+ *
+ * Contains 48 deterministic products across 7 categories with varied
+ * price ranges and ratings — sufficient to demonstrate filtering,
+ * sorting, and pagination.
+ */
+export const PRODUCTS: Product[] = [
+  // ── Electronics ──────────────────────────────────────────────────
+  {
+    id: "elec-001",
+    name: "Wireless Noise-Cancelling Headphones",
+    category: "Electronics",
+    price: 299.99,
+    rating: 4.7,
+    reviewCount: 1842,
+    description:
+      "Premium over-ear headphones with active noise cancellation, 30-hour battery life, and Hi-Res audio certification.",
+  },
+  {
+    id: "elec-002",
+    name: "Mechanical Keyboard – TKL RGB",
+    category: "Electronics",
+    price: 129.99,
+    rating: 4.5,
+    reviewCount: 934,
+    description:
+      "Tenkeyless mechanical keyboard with tactile switches, per-key RGB lighting, and detachable USB-C cable.",
+  },
+  {
+    id: "elec-003",
+    name: '4K Ultra HD Monitor – 27"',
+    category: "Electronics",
+    price: 549.99,
+    rating: 4.6,
+    reviewCount: 721,
+    description:
+      "27-inch IPS display with 3840×2160 resolution, 144Hz refresh rate, HDR600, and USB-C power delivery.",
+  },
+  {
+    id: "elec-004",
+    name: "Portable Bluetooth Speaker",
+    category: "Electronics",
+    price: 79.99,
+    rating: 4.3,
+    reviewCount: 2105,
+    description:
+      "IP67 waterproof speaker with 360° sound, 20-hour battery, and built-in microphone for hands-free calls.",
+  },
+  {
+    id: "elec-005",
+    name: "Smart Home Hub",
+    category: "Electronics",
+    price: 149.99,
+    rating: 4.1,
+    reviewCount: 589,
+    description:
+      "Central hub compatible with Zigbee, Z-Wave, and Matter devices. Controls up to 100 smart home devices.",
+  },
+  {
+    id: "elec-006",
+    name: "Webcam 4K – Wide Angle",
+    category: "Electronics",
+    price: 89.99,
+    rating: 4.4,
+    reviewCount: 1203,
+    description:
+      "4K webcam with 90° field of view, AI-powered autofocus, built-in ring light, and dual noise-cancelling mics.",
+  },
+  {
+    id: "elec-007",
+    name: "Wireless Ergonomic Mouse",
+    category: "Electronics",
+    price: 49.99,
+    rating: 4.2,
+    reviewCount: 3410,
+    description:
+      "Vertical ergonomic wireless mouse with 4000 DPI sensor, silent clicks, and 70-day battery life.",
+  },
+  {
+    id: "elec-008",
+    name: "USB-C Docking Station – 12-in-1",
+    category: "Electronics",
+    price: 119.99,
+    rating: 4.0,
+    reviewCount: 876,
+    description:
+      "12-in-1 USB-C hub with dual HDMI (4K@60Hz), 100W PD, Gigabit Ethernet, SD/microSD, and 4× USB-A.",
+  },
+  {
+    id: "elec-009",
+    name: "True Wireless Earbuds",
+    category: "Electronics",
+    price: 159.99,
+    rating: 4.6,
+    reviewCount: 4231,
+    description:
+      "IPX5 earbuds with hybrid ANC, 8-hour playback (32h with case), multipoint Bluetooth 5.3 connection.",
+  },
+  {
+    id: "elec-010",
+    name: "Smart Lighting Starter Kit",
+    category: "Electronics",
+    price: 69.99,
+    rating: 3.9,
+    reviewCount: 642,
+    description:
+      "4-bulb starter kit with hub, supporting 16 million colors, voice control, and scheduling automation.",
+  },
+
+  // ── Clothing ─────────────────────────────────────────────────────
+  {
+    id: "clth-001",
+    name: "Merino Wool Crew-Neck Sweater",
+    category: "Clothing",
+    price: 89.99,
+    rating: 4.6,
+    reviewCount: 512,
+    description:
+      "100% extra-fine merino wool sweater. Temperature-regulating, naturally odour-resistant, machine washable.",
+  },
+  {
+    id: "clth-002",
+    name: "Water-Resistant Softshell Jacket",
+    category: "Clothing",
+    price: 139.99,
+    rating: 4.4,
+    reviewCount: 388,
+    description:
+      "4-way stretch softshell with DWR coating, two hand pockets, one chest pocket, and a packable hood.",
+  },
+  {
+    id: "clth-003",
+    name: "Classic Slim-Fit Chinos",
+    category: "Clothing",
+    price: 59.99,
+    rating: 4.2,
+    reviewCount: 1204,
+    description:
+      "Slim-fit cotton-stretch chinos available in 8 colors. Wrinkle-resistant, flat-front, hidden coin pocket.",
+  },
+  {
+    id: "clth-004",
+    name: "Graphic Print T-Shirt",
+    category: "Clothing",
+    price: 24.99,
+    rating: 4.0,
+    reviewCount: 2187,
+    description:
+      "100% combed ring-spun cotton tee with vintage-wash graphic print. Pre-shrunk and tagless.",
+  },
+  {
+    id: "clth-005",
+    name: "Running Shorts – 5-inch Inseam",
+    category: "Clothing",
+    price: 34.99,
+    rating: 4.5,
+    reviewCount: 897,
+    description:
+      "Lightweight moisture-wicking shorts with inner liner, reflective details, and zippered back pocket.",
+  },
+  {
+    id: "clth-006",
+    name: "Insulated Puffer Vest",
+    category: "Clothing",
+    price: 79.99,
+    rating: 4.3,
+    reviewCount: 441,
+    description:
+      "600-fill recycled down vest with DWR treatment, two hand pockets, and a packable stuff-sack design.",
+  },
+  {
+    id: "clth-007",
+    name: "Linen Button-Down Shirt",
+    category: "Clothing",
+    price: 49.99,
+    rating: 4.1,
+    reviewCount: 763,
+    description:
+      "100% European linen shirt with chest pocket, one-button adjustable cuffs, and a relaxed fit.",
+  },
+
+  // ── Books ─────────────────────────────────────────────────────────
+  {
+    id: "book-001",
+    name: "Clean Code: A Handbook of Agile Software Craftsmanship",
+    category: "Books",
+    price: 34.99,
+    rating: 4.7,
+    reviewCount: 5120,
+    description:
+      "Robert C. Martin's classic guide to writing maintainable, professional-grade software.",
+  },
+  {
+    id: "book-002",
+    name: "Designing Data-Intensive Applications",
+    category: "Books",
+    price: 49.99,
+    rating: 4.9,
+    reviewCount: 3872,
+    description:
+      "Martin Kleppmann's deep dive into the principles behind reliable, scalable, and maintainable systems.",
+  },
+  {
+    id: "book-003",
+    name: "The Pragmatic Programmer – 20th Anniversary Ed.",
+    category: "Books",
+    price: 39.99,
+    rating: 4.8,
+    reviewCount: 2941,
+    description:
+      "Timeless advice for programmers at any stage of their career on practices, tools, and mindset.",
+  },
+  {
+    id: "book-004",
+    name: "JavaScript: The Good Parts",
+    category: "Books",
+    price: 24.99,
+    rating: 4.3,
+    reviewCount: 4210,
+    description:
+      "Douglas Crockford distils the best of JavaScript into a concise, well-reasoned guide.",
+  },
+  {
+    id: "book-005",
+    name: "You Don't Know JS Yet: Scope & Closures",
+    category: "Books",
+    price: 19.99,
+    rating: 4.6,
+    reviewCount: 1832,
+    description:
+      "Kyle Simpson's thorough exploration of one of JavaScript's most nuanced topics.",
+  },
+  {
+    id: "book-006",
+    name: "Atomic Habits",
+    category: "Books",
+    price: 14.99,
+    rating: 4.8,
+    reviewCount: 98320,
+    description:
+      "James Clear's practical framework for building good habits and breaking bad ones, backed by science.",
+  },
+
+  // ── Home & Garden ─────────────────────────────────────────────────
+  {
+    id: "home-001",
+    name: "Air Purifier – HEPA H13",
+    category: "Home & Garden",
+    price: 199.99,
+    rating: 4.5,
+    reviewCount: 1320,
+    description:
+      "True HEPA H13 filtration removes 99.97% of particles ≥0.3 µm. Coverage up to 500 sq ft with auto mode.",
+  },
+  {
+    id: "home-002",
+    name: "Stainless Steel French Press – 1L",
+    category: "Home & Garden",
+    price: 39.99,
+    rating: 4.6,
+    reviewCount: 2308,
+    description:
+      "Double-wall insulated French press with fine mesh filter, stays hot for 2 hours, dishwasher-safe.",
+  },
+  {
+    id: "home-003",
+    name: "Cast Iron Dutch Oven – 5.5 Qt",
+    category: "Home & Garden",
+    price: 89.99,
+    rating: 4.8,
+    reviewCount: 3402,
+    description:
+      "Pre-seasoned cast iron Dutch oven with self-basting lid. Suitable for oven, stovetop, and campfire use.",
+  },
+  {
+    id: "home-004",
+    name: "Cordless Robotic Vacuum",
+    category: "Home & Garden",
+    price: 349.99,
+    rating: 4.2,
+    reviewCount: 854,
+    description:
+      "LiDAR-navigation robot vacuum with app scheduling, multi-floor mapping, and 90-minute runtime.",
+  },
+  {
+    id: "home-005",
+    name: "Bamboo Cutting Board Set – 3pc",
+    category: "Home & Garden",
+    price: 34.99,
+    rating: 4.4,
+    reviewCount: 1742,
+    description:
+      "Set of 3 eco-friendly bamboo cutting boards (S/M/L) with juice grooves and non-slip feet.",
+  },
+  {
+    id: "home-006",
+    name: "Smart Thermostat",
+    category: "Home & Garden",
+    price: 129.99,
+    rating: 4.3,
+    reviewCount: 2019,
+    description:
+      "Learning thermostat with geofencing, energy reports, and compatibility with most 24V HVAC systems.",
+  },
+  {
+    id: "home-007",
+    name: "Ceramic Planter Set – Indoor",
+    category: "Home & Garden",
+    price: 44.99,
+    rating: 4.1,
+    reviewCount: 619,
+    description:
+      "Set of 4 minimalist matte ceramic planters with drainage holes and matching saucers.",
+  },
+
+  // ── Sports & Outdoors ─────────────────────────────────────────────
+  {
+    id: "sprt-001",
+    name: "Adjustable Dumbbell Set – 5–52.5 lb",
+    category: "Sports & Outdoors",
+    price: 399.99,
+    rating: 4.7,
+    reviewCount: 6241,
+    description:
+      "Select-a-weight system replaces 15 sets of dumbbells. Dial adjusts in 2.5 lb increments up to 52.5 lb.",
+  },
+  {
+    id: "sprt-002",
+    name: "Yoga Mat – 6mm Non-Slip",
+    category: "Sports & Outdoors",
+    price: 49.99,
+    rating: 4.5,
+    reviewCount: 3812,
+    description:
+      "6mm thick eco-friendly TPE yoga mat with alignment guides, non-slip texture, and carry strap.",
+  },
+  {
+    id: "sprt-003",
+    name: "Trekking Poles – Carbon Fibre",
+    category: "Sports & Outdoors",
+    price: 119.99,
+    rating: 4.6,
+    reviewCount: 1024,
+    description:
+      "Collapsible carbon fibre poles with cork grip, anti-shock mechanism, and Quick-Lock adjustment.",
+  },
+  {
+    id: "sprt-004",
+    name: "Hydration Pack – 20L",
+    category: "Sports & Outdoors",
+    price: 89.99,
+    rating: 4.4,
+    reviewCount: 741,
+    description:
+      "20L trail pack with 2.5L bladder, ventilated back panel, hip belt pockets, and rain cover.",
+  },
+  {
+    id: "sprt-005",
+    name: "Jump Rope – Speed Cable",
+    category: "Sports & Outdoors",
+    price: 19.99,
+    rating: 4.3,
+    reviewCount: 5234,
+    description:
+      "Adjustable stainless steel speed rope with ball-bearing handles. Suitable for CrossFit and HIIT.",
+  },
+  {
+    id: "sprt-006",
+    name: "Foam Roller – High Density",
+    category: "Sports & Outdoors",
+    price: 29.99,
+    rating: 4.2,
+    reviewCount: 4102,
+    description:
+      "36-inch high-density EVA foam roller for myofascial release, warm-up, and recovery.",
+  },
+
+  // ── Toys & Games ─────────────────────────────────────────────────
+  {
+    id: "toys-001",
+    name: "Strategy Board Game – Settlers",
+    category: "Toys & Games",
+    price: 44.99,
+    rating: 4.6,
+    reviewCount: 8321,
+    description:
+      "Award-winning resource-management board game for 3–4 players (ages 10+). Average play time 60–120 min.",
+  },
+  {
+    id: "toys-002",
+    name: "1000-Piece Jigsaw Puzzle – World Map",
+    category: "Toys & Games",
+    price: 19.99,
+    rating: 4.4,
+    reviewCount: 2104,
+    description:
+      "High-quality 1000-piece puzzle with a precision-cut world map design. Finished size 68×48 cm.",
+  },
+  {
+    id: "toys-003",
+    name: "STEM Building Kit – Robotics",
+    category: "Toys & Games",
+    price: 79.99,
+    rating: 4.7,
+    reviewCount: 1432,
+    description:
+      "400-piece robotics kit with programmable controller, sensors, and guided projects for ages 8+.",
+  },
+  {
+    id: "toys-004",
+    name: "Classic Chess Set – Staunton",
+    category: "Toys & Games",
+    price: 34.99,
+    rating: 4.5,
+    reviewCount: 3218,
+    description:
+      "Weighted tournament Staunton chess pieces with felted bases and folding wooden board.",
+  },
+  {
+    id: "toys-005",
+    name: "Playing Cards – Luxury Edition",
+    category: "Toys & Games",
+    price: 12.99,
+    rating: 4.3,
+    reviewCount: 6710,
+    description:
+      "Premium casino-grade 100% plastic playing cards. Two-deck set with linen finish.",
+  },
+
+  // ── Beauty & Health ───────────────────────────────────────────────
+  {
+    id: "beau-001",
+    name: "Vitamin C Brightening Serum",
+    category: "Beauty & Health",
+    price: 29.99,
+    rating: 4.5,
+    reviewCount: 7231,
+    description:
+      "20% L-ascorbic acid serum with vitamin E and ferulic acid. Reduces dark spots and firms skin.",
+  },
+  {
+    id: "beau-002",
+    name: "Electric Toothbrush – Sonic Pro",
+    category: "Beauty & Health",
+    price: 59.99,
+    rating: 4.6,
+    reviewCount: 4812,
+    description:
+      "40,000 strokes/min sonic toothbrush with 5 cleaning modes, 2-minute timer, and 4-week battery.",
+  },
+  {
+    id: "beau-003",
+    name: "Natural Deodorant – Sensitive Skin",
+    category: "Beauty & Health",
+    price: 12.99,
+    rating: 4.2,
+    reviewCount: 3104,
+    description:
+      "Aluminum-free, baking-soda-free formula with magnesium and shea butter. 72-hour protection.",
+  },
+  {
+    id: "beau-004",
+    name: "Silk Pillowcase – Queen Size",
+    category: "Beauty & Health",
+    price: 39.99,
+    rating: 4.7,
+    reviewCount: 2819,
+    description:
+      "22 momme 100% mulberry silk pillowcase. Reduces friction on hair and skin, hypoallergenic.",
+  },
+  {
+    id: "beau-005",
+    name: "Foam Facial Cleanser – Hyaluronic",
+    category: "Beauty & Health",
+    price: 16.99,
+    rating: 4.4,
+    reviewCount: 5432,
+    description:
+      "Gentle foaming cleanser with hyaluronic acid and ceramides for all skin types. Fragrance-free.",
+  },
+  {
+    id: "beau-006",
+    name: "Collagen Peptides Powder – Unflavoured",
+    category: "Beauty & Health",
+    price: 34.99,
+    rating: 4.5,
+    reviewCount: 6120,
+    description:
+      "Grass-fed hydrolysed collagen peptides (types I & III). Dissolves instantly in hot or cold liquids.",
+  },
+];
