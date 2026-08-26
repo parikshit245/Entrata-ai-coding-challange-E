@@ -1,5 +1,18 @@
 # 🛍️ LUMINA — High-Performance Product Catalog & Faceted Filter System
 
+<div align="left">
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-lumina--catalog.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://lumina-catalog.vercel.app/)
+[![Next.js 16](https://img.shields.io/badge/Next.js%2016-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React 19](https://img.shields.io/badge/React%2019-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript%205-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS_4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vitest](https://img.shields.io/badge/Tests-92%20Passed-10B981?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
+[![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+
+</div>
+
 🌐 **Live Demo:** [https://lumina-catalog.vercel.app/](https://lumina-catalog.vercel.app/)  
 📦 **Repository:** [https://github.com/parikshit245/Entrata-ai-coding-challange-Task-1](https://github.com/parikshit245/Entrata-ai-coding-challange-Task-1)
 
