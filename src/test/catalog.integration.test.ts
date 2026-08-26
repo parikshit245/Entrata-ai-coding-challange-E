@@ -45,23 +45,37 @@ describe("Scenario 1 — no filters", () => {
 
 describe("Scenario 2 — category filtering", () => {
   it("shows only Electronics when Electronics is selected", () => {
-    const result = applyCatalogQuery(PRODUCTS, makeQuery({
-      filters: { ...noFilters, categories: ["Electronics"] },
-    }));
-    expect(result.products.every(p => p.category === "Electronics")).toBe(true);
+    const result = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({
+        filters: { ...noFilters, categories: ["Electronics"] },
+      }),
+    );
+    expect(result.products.every((p) => p.category === "Electronics")).toBe(
+      true,
+    );
     expect(result.totalCount).toBeGreaterThan(0);
   });
 
   it("multi-category selection broadens results (OR within categories)", () => {
-    const singleElec = applyCatalogQuery(PRODUCTS, makeQuery({
-      filters: { ...noFilters, categories: ["Electronics"] },
-    })).totalCount;
-    const singleBook = applyCatalogQuery(PRODUCTS, makeQuery({
-      filters: { ...noFilters, categories: ["Books"] },
-    })).totalCount;
-    const both = applyCatalogQuery(PRODUCTS, makeQuery({
-      filters: { ...noFilters, categories: ["Electronics", "Books"] },
-    })).totalCount;
+    const singleElec = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({
+        filters: { ...noFilters, categories: ["Electronics"] },
+      }),
+    ).totalCount;
+    const singleBook = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({
+        filters: { ...noFilters, categories: ["Books"] },
+      }),
+    ).totalCount;
+    const both = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({
+        filters: { ...noFilters, categories: ["Electronics", "Books"] },
+      }),
+    ).totalCount;
 
     expect(both).toBe(singleElec + singleBook);
   });
@@ -88,7 +102,7 @@ describe("Scenario 3 — minimum price filter", () => {
       ...noFilters,
       priceRange: { min: minPrice, max: null },
     });
-    expect(result.every(p => p.price >= minPrice)).toBe(true);
+    expect(result.every((p) => p.price >= minPrice)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
   });
 
@@ -98,7 +112,7 @@ describe("Scenario 3 — minimum price filter", () => {
       ...noFilters,
       priceRange: { min: exactPrice, max: null },
     });
-    expect(result.some(p => p.price === exactPrice)).toBe(true);
+    expect(result.some((p) => p.price === exactPrice)).toBe(true);
   });
 });
 
@@ -109,7 +123,7 @@ describe("Scenario 4 — maximum price filter", () => {
       ...noFilters,
       priceRange: { min: null, max: maxPrice },
     });
-    expect(result.every(p => p.price <= maxPrice)).toBe(true);
+    expect(result.every((p) => p.price <= maxPrice)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
   });
 
@@ -119,7 +133,7 @@ describe("Scenario 4 — maximum price filter", () => {
       ...noFilters,
       priceRange: { min: null, max: exactPrice },
     });
-    expect(result.some(p => p.price === exactPrice)).toBe(true);
+    expect(result.some((p) => p.price === exactPrice)).toBe(true);
   });
 });
 
@@ -129,7 +143,7 @@ describe("Scenario 5 — min + max price filter", () => {
       ...noFilters,
       priceRange: { min: 50, max: 150 },
     });
-    expect(result.every(p => p.price >= 50 && p.price <= 150)).toBe(true);
+    expect(result.every((p) => p.price >= 50 && p.price <= 150)).toBe(true);
   });
 
   it("returns empty when min > max (impossible range)", () => {
@@ -152,7 +166,7 @@ describe("Scenario 6 — rating filter", () => {
       ...noFilters,
       minRating,
     });
-    expect(result.every(p => p.rating >= minRating)).toBe(true);
+    expect(result.every((p) => p.rating >= minRating)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
   });
 
@@ -162,7 +176,7 @@ describe("Scenario 6 — rating filter", () => {
       ...noFilters,
       minRating: boundary,
     });
-    expect(result.some(p => p.rating === boundary)).toBe(true);
+    expect(result.some((p) => p.rating === boundary)).toBe(true);
   });
 });
 
@@ -188,7 +202,10 @@ describe("Scenario 7 — combined filters", () => {
   });
 
   it("combined strict filters may return fewer products than any individual filter", () => {
-    const electronics = filterProducts(PRODUCTS, { ...noFilters, categories: ["Electronics"] }).length;
+    const electronics = filterProducts(PRODUCTS, {
+      ...noFilters,
+      categories: ["Electronics"],
+    }).length;
     const combined = filterProducts(PRODUCTS, {
       categories: ["Electronics"],
       priceRange: { min: 200, max: null },
@@ -210,32 +227,47 @@ describe("Scenario 8 — sorting preserves filters", () => {
   };
 
   it("sorted results still satisfy the active filters", () => {
-    const result = applyCatalogQuery(PRODUCTS, makeQuery({
-      filters,
-      sort: "price-asc",
-    }));
+    const result = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({
+        filters,
+        sort: "price-asc",
+      }),
+    );
     for (const p of result.products) {
       expect(p.category).toBe("Books");
     }
   });
 
   it("totalCount is the same regardless of sort option", () => {
-    const asc = applyCatalogQuery(PRODUCTS, makeQuery({ filters, sort: "price-asc" }));
-    const desc = applyCatalogQuery(PRODUCTS, makeQuery({ filters, sort: "price-desc" }));
+    const asc = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({ filters, sort: "price-asc" }),
+    );
+    const desc = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({ filters, sort: "price-desc" }),
+    );
     expect(asc.totalCount).toBe(desc.totalCount);
   });
 
   it("price-asc produces ascending price order on the page", () => {
-    const result = applyCatalogQuery(PRODUCTS, makeQuery({ sort: "price-asc" }));
-    const prices = result.products.map(p => p.price);
+    const result = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({ sort: "price-asc" }),
+    );
+    const prices = result.products.map((p) => p.price);
     for (let i = 0; i < prices.length - 1; i++) {
       expect(prices[i]).toBeLessThanOrEqual(prices[i + 1]);
     }
   });
 
   it("price-desc produces descending price order on the page", () => {
-    const result = applyCatalogQuery(PRODUCTS, makeQuery({ sort: "price-desc" }));
-    const prices = result.products.map(p => p.price);
+    const result = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({ sort: "price-desc" }),
+    );
+    const prices = result.products.map((p) => p.price);
     for (let i = 0; i < prices.length - 1; i++) {
       expect(prices[i]).toBeGreaterThanOrEqual(prices[i + 1]);
     }
@@ -243,15 +275,18 @@ describe("Scenario 8 — sorting preserves filters", () => {
 
   it("name-asc produces alphabetical order", () => {
     const result = applyCatalogQuery(PRODUCTS, makeQuery({ sort: "name-asc" }));
-    const names = result.products.map(p => p.name);
+    const names = result.products.map((p) => p.name);
     for (let i = 0; i < names.length - 1; i++) {
       expect(names[i].localeCompare(names[i + 1])).toBeLessThanOrEqual(0);
     }
   });
 
   it("rating-desc puts highest rated first", () => {
-    const result = applyCatalogQuery(PRODUCTS, makeQuery({ sort: "rating-desc", pageSize: 48 }));
-    const ratings = result.products.map(p => p.rating);
+    const result = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({ sort: "rating-desc", pageSize: 48 }),
+    );
+    const ratings = result.products.map((p) => p.rating);
     for (let i = 0; i < ratings.length - 1; i++) {
       expect(ratings[i]).toBeGreaterThanOrEqual(ratings[i + 1]);
     }
@@ -270,7 +305,10 @@ describe("Scenario 9 — pagination preserves query state", () => {
   };
 
   it("page 2 still shows only Electronics", () => {
-    const result = applyCatalogQuery(PRODUCTS, makeQuery({ filters, page: 2, pageSize: 3 }));
+    const result = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({ filters, page: 2, pageSize: 3 }),
+    );
     for (const p of result.products) {
       expect(p.category).toBe("Electronics");
     }
@@ -278,11 +316,17 @@ describe("Scenario 9 — pagination preserves query state", () => {
   });
 
   it("first-page and second-page products do not overlap", () => {
-    const page1 = applyCatalogQuery(PRODUCTS, makeQuery({ filters, page: 1, pageSize: 3 }));
-    const page2 = applyCatalogQuery(PRODUCTS, makeQuery({ filters, page: 2, pageSize: 3 }));
-    const ids1 = new Set(page1.products.map(p => p.id));
-    const ids2 = new Set(page2.products.map(p => p.id));
-    const overlap = [...ids2].filter(id => ids1.has(id));
+    const page1 = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({ filters, page: 1, pageSize: 3 }),
+    );
+    const page2 = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({ filters, page: 2, pageSize: 3 }),
+    );
+    const ids1 = new Set(page1.products.map((p) => p.id));
+    const ids2 = new Set(page2.products.map((p) => p.id));
+    const overlap = [...ids2].filter((id) => ids1.has(id));
     expect(overlap).toHaveLength(0);
   });
 });
@@ -294,21 +338,27 @@ describe("Scenario 9 — pagination preserves query state", () => {
 describe("Scenario 10 — page clamping on filter change", () => {
   it("clamps page to valid range when filter reduces total pages", () => {
     // Start on page 10 with few results (Books only has ~6 products = 1 page at 12)
-    const result = applyCatalogQuery(PRODUCTS, makeQuery({
-      filters: { ...noFilters, categories: ["Books"] },
-      page: 10,
-      pageSize: 12,
-    }));
+    const result = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({
+        filters: { ...noFilters, categories: ["Books"] },
+        page: 10,
+        pageSize: 12,
+      }),
+    );
     expect(result.currentPage).toBeLessThanOrEqual(result.totalPages);
     expect(result.currentPage).toBeGreaterThanOrEqual(1);
   });
 
   it("clamped page still returns products (not empty)", () => {
-    const result = applyCatalogQuery(PRODUCTS, makeQuery({
-      filters: { ...noFilters, categories: ["Books"] },
-      page: 999,
-      pageSize: 12,
-    }));
+    const result = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({
+        filters: { ...noFilters, categories: ["Books"] },
+        page: 999,
+        pageSize: 12,
+      }),
+    );
     expect(result.products.length).toBeGreaterThan(0);
   });
 });
@@ -334,25 +384,31 @@ describe("Scenario 11 — filter reset", () => {
 
 describe("Scenario 12 — empty result state", () => {
   it("returns empty products array when no products match", () => {
-    const result = applyCatalogQuery(PRODUCTS, makeQuery({
-      filters: {
-        categories: ["Electronics"],
-        priceRange: { min: 99999, max: null },
-        minRating: null,
-      },
-    }));
+    const result = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({
+        filters: {
+          categories: ["Electronics"],
+          priceRange: { min: 99999, max: null },
+          minRating: null,
+        },
+      }),
+    );
     expect(result.products).toHaveLength(0);
     expect(result.totalCount).toBe(0);
   });
 
   it("totalPages is 1 even when result is empty (no invalid page state)", () => {
-    const result = applyCatalogQuery(PRODUCTS, makeQuery({
-      filters: {
-        categories: [],
-        priceRange: { min: 99999, max: null },
-        minRating: null,
-      },
-    }));
+    const result = applyCatalogQuery(
+      PRODUCTS,
+      makeQuery({
+        filters: {
+          categories: [],
+          priceRange: { min: 99999, max: null },
+          minRating: null,
+        },
+      }),
+    );
     expect(result.totalPages).toBe(1);
     expect(result.currentPage).toBe(1);
   });
@@ -404,15 +460,17 @@ describe("Pagination edge cases", () => {
 
 describe("Dataset integrity", () => {
   it("no two products share the same ID", () => {
-    const ids = PRODUCTS.map(p => p.id);
+    const ids = PRODUCTS.map((p) => p.id);
     expect(new Set(ids).size).toBe(ids.length);
   });
 
   it("all product prices are positive numbers", () => {
-    expect(PRODUCTS.every(p => typeof p.price === "number" && p.price > 0)).toBe(true);
+    expect(
+      PRODUCTS.every((p) => typeof p.price === "number" && p.price > 0),
+    ).toBe(true);
   });
 
   it("all product ratings are in [0, 5]", () => {
-    expect(PRODUCTS.every(p => p.rating >= 0 && p.rating <= 5)).toBe(true);
+    expect(PRODUCTS.every((p) => p.rating >= 0 && p.rating <= 5)).toBe(true);
   });
 });

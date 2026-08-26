@@ -41,11 +41,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
  * Sort options for the product catalog.
  */
 export type SortOption =
-  | "relevance"
-  | "price-asc"
-  | "price-desc"
-  | "rating-desc"
-  | "name-asc";
+  "relevance" | "price-asc" | "price-desc" | "rating-desc" | "name-asc";
 
 export const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: "relevance", label: "Relevance" },

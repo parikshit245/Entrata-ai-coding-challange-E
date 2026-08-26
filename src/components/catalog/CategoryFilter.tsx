@@ -16,7 +16,7 @@ interface CategoryFilterProps {
 export function CategoryFilter({ selected, onToggle }: CategoryFilterProps) {
   return (
     <fieldset className="border-none p-0">
-      <legend className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+      <legend className="text-xs font-semibold tracking-wider text-[var(--text-muted)] uppercase">
         Category
       </legend>
       <div className="mt-3 space-y-1">
@@ -29,7 +29,7 @@ export function CategoryFilter({ selected, onToggle }: CategoryFilterProps) {
               htmlFor={id}
               className={`flex cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] px-2.5 py-2 text-sm transition-colors duration-100 ${
                 isChecked
-                  ? "bg-[var(--accent-subtle)] text-[var(--accent-text)] font-medium"
+                  ? "bg-[var(--accent-subtle)] font-medium text-[var(--accent-text)]"
                   : "text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)]"
               }`}
             >

@@ -8,7 +8,10 @@ import { FilterSidebar } from "@/components/catalog/FilterSidebar";
 import { MobileFilterDrawer } from "@/components/catalog/MobileFilterDrawer";
 import { ProductGrid } from "@/components/catalog/ProductGrid";
 import { SortControl } from "@/components/catalog/SortControl";
-import { ActiveFilters, type ActiveFilterChip } from "@/components/catalog/ActiveFilters";
+import {
+  ActiveFilters,
+  type ActiveFilterChip,
+} from "@/components/catalog/ActiveFilters";
 import { ResultsSummary } from "@/components/catalog/ResultsSummary";
 import { Pagination } from "@/components/catalog/Pagination";
 import { FilterState, ProductCategory } from "@/types/product";
@@ -80,7 +83,10 @@ export default function CatalogPage() {
       />
 
       {/* ── Main Catalog Workspace ───────────────────────────────── */}
-      <main id="catalog-section" className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8 scroll-mt-16">
+      <main
+        id="catalog-section"
+        className="mx-auto w-full max-w-7xl flex-1 scroll-mt-16 px-4 py-8 sm:px-6 lg:px-8"
+      >
         {/* Section Heading & Subtitle */}
         <div className="mb-6 flex flex-col gap-1">
           <div className="flex items-center gap-2">
@@ -92,7 +98,8 @@ export default function CatalogPage() {
             </span>
           </div>
           <p className="text-xs text-[var(--text-muted)]">
-            Use the filters below to refine by specific category, budget, or customer ratings.
+            Use the filters below to refine by specific category, budget, or
+            customer ratings.
           </p>
         </div>
 
@@ -104,13 +111,23 @@ export default function CatalogPage() {
               type="button"
               id="mobile-filter-open"
               onClick={() => setIsDrawerOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--text-primary)] shadow-sm transition-colors hover:bg-[var(--surface-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] lg:hidden"
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--text-primary)] shadow-sm transition-colors hover:bg-[var(--surface-subtle)] focus:ring-2 focus:ring-[var(--accent)] focus:outline-none lg:hidden"
               aria-expanded={isDrawerOpen}
               aria-controls="mobile-filter-drawer"
               aria-label="Open filters panel"
             >
-              <svg className="h-3.5 w-3.5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              <svg
+                className="h-3.5 w-3.5 text-[var(--text-secondary)]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                />
               </svg>
               <span>Filters</span>
               {catalog.hasActiveFilters && (
@@ -177,7 +194,9 @@ export default function CatalogPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-[var(--text-primary)]">LUMINA Store</span>
+              <span className="font-bold text-[var(--text-primary)]">
+                LUMINA Store
+              </span>
               <span>— Quality Verified Products</span>
             </div>
             <p>© 2026 LUMINA Catalog Inc. All rights reserved.</p>

@@ -263,10 +263,12 @@ describe("sortProducts", () => {
 
 describe("paginateProducts", () => {
   // Use a 10-item list for easy page arithmetic
-  const TEN: Product[] = FIXTURE.concat(FIXTURE).slice(0, 10).map((p, i) => ({
-    ...p,
-    id: `p${i}`,
-  }));
+  const TEN: Product[] = FIXTURE.concat(FIXTURE)
+    .slice(0, 10)
+    .map((p, i) => ({
+      ...p,
+      id: `p${i}`,
+    }));
 
   it("returns the first page correctly", () => {
     const { pageProducts, clampedPage } = paginateProducts(TEN, 1, 3);
@@ -334,8 +336,9 @@ describe("applyCatalogQuery", () => {
       ...DEFAULT_CATALOG_QUERY,
       filters: { ...noFilters, categories: ["Books"] },
     });
-    const booksInDataset = PRODUCTS.filter((p) => p.category === "Books")
-      .length;
+    const booksInDataset = PRODUCTS.filter(
+      (p) => p.category === "Books",
+    ).length;
     expect(result.totalCount).toBe(booksInDataset);
     expect(result.products.length).toBeLessThanOrEqual(booksInDataset);
   });
@@ -462,25 +465,41 @@ describe("getPriceRange", () => {
 describe("isPriceRangeActive", () => {
   it("returns false when both bounds are null", () => {
     expect(
-      isPriceRangeActive({ ...noFilters, priceRange: { min: null, max: null } }, 0, 500),
+      isPriceRangeActive(
+        { ...noFilters, priceRange: { min: null, max: null } },
+        0,
+        500,
+      ),
     ).toBe(false);
   });
 
   it("returns true when min is above dataset minimum", () => {
     expect(
-      isPriceRangeActive({ ...noFilters, priceRange: { min: 50, max: null } }, 0, 500),
+      isPriceRangeActive(
+        { ...noFilters, priceRange: { min: 50, max: null } },
+        0,
+        500,
+      ),
     ).toBe(true);
   });
 
   it("returns true when max is below dataset maximum", () => {
     expect(
-      isPriceRangeActive({ ...noFilters, priceRange: { min: null, max: 300 } }, 0, 500),
+      isPriceRangeActive(
+        { ...noFilters, priceRange: { min: null, max: 300 } },
+        0,
+        500,
+      ),
     ).toBe(true);
   });
 
   it("returns false when bounds equal dataset extremes", () => {
     expect(
-      isPriceRangeActive({ ...noFilters, priceRange: { min: 0, max: 500 } }, 0, 500),
+      isPriceRangeActive(
+        { ...noFilters, priceRange: { min: 0, max: 500 } },
+        0,
+        500,
+      ),
     ).toBe(false);
   });
 });

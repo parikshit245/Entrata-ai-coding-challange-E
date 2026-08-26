@@ -102,10 +102,7 @@ export function useCatalog(): UseCatalogReturn {
   const [query, setQuery] = useState<CatalogQuery>(DEFAULT_CATALOG_QUERY);
 
   // Derived — recomputed only when query changes
-  const result = useMemo(
-    () => applyCatalogQuery(PRODUCTS, query),
-    [query],
-  );
+  const result = useMemo(() => applyCatalogQuery(PRODUCTS, query), [query]);
 
   // Static — never changes (dataset is static)
   const datasetPriceRange = useMemo(() => getPriceRange(PRODUCTS), []);

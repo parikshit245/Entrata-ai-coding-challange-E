@@ -20,7 +20,7 @@ interface RatingFilterProps {
 export function RatingFilter({ minRating, onChange }: RatingFilterProps) {
   return (
     <fieldset className="border-none p-0">
-      <legend className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+      <legend className="text-xs font-semibold tracking-wider text-[var(--text-muted)] uppercase">
         Minimum Rating
       </legend>
 
@@ -35,7 +35,7 @@ export function RatingFilter({ minRating, onChange }: RatingFilterProps) {
               htmlFor={id}
               className={`flex cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] px-2.5 py-2 text-sm transition-colors duration-100 ${
                 isSelected
-                  ? "bg-[var(--accent-subtle)] text-[var(--accent-text)] font-medium"
+                  ? "bg-[var(--accent-subtle)] font-medium text-[var(--accent-text)]"
                   : "text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)]"
               }`}
             >
@@ -64,7 +64,10 @@ export function RatingFilter({ minRating, onChange }: RatingFilterProps) {
               />
 
               {/* Star display with vector SVGs */}
-              <div className="flex items-center gap-0.5 text-[var(--star)]" aria-hidden="true">
+              <div
+                className="flex items-center gap-0.5 text-[var(--star)]"
+                aria-hidden="true"
+              >
                 {[1, 2, 3, 4, 5].map((star) => (
                   <svg
                     key={star}
@@ -77,7 +80,9 @@ export function RatingFilter({ minRating, onChange }: RatingFilterProps) {
                 ))}
               </div>
 
-              <span className={`text-xs ${isSelected ? "font-semibold text-[var(--text-primary)]" : "text-[var(--text-secondary)]"}`}>
+              <span
+                className={`text-xs ${isSelected ? "font-semibold text-[var(--text-primary)]" : "text-[var(--text-secondary)]"}`}
+              >
                 {option.value}+
               </span>
             </label>

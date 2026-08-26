@@ -33,10 +33,14 @@ export function ResultsSummary({
       aria-atomic="true"
     >
       {totalCount === 0 ? (
-        <span className="font-medium text-[var(--text-muted)]">No products matching criteria</span>
+        <span className="font-medium text-[var(--text-muted)]">
+          No products matching criteria
+        </span>
       ) : (
         <div className="flex items-center gap-1.5">
-          <span className="font-semibold text-[var(--text-primary)]">{totalCount}</span>
+          <span className="font-semibold text-[var(--text-primary)]">
+            {totalCount}
+          </span>
           <span>{totalCount === 1 ? "product" : "products"} found</span>
           {totalPages > 1 && (
             <span className="text-[var(--text-muted)]">

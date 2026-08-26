@@ -39,7 +39,7 @@ export function ActiveFilters({
       aria-live="polite"
       aria-label="Active filters"
     >
-      <span className="text-xs font-medium text-[var(--text-muted)] mr-1">
+      <span className="mr-1 text-xs font-medium text-[var(--text-muted)]">
         Active filters:
       </span>
       {filterSummary.map((chip) => (
@@ -52,7 +52,7 @@ export function ActiveFilters({
             type="button"
             onClick={() => onRemove(chip.key)}
             aria-label={`Remove ${chip.label} filter`}
-            className="flex h-3.5 w-3.5 items-center justify-center rounded-full text-[var(--accent-text)] hover:bg-[var(--accent)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+            className="flex h-3.5 w-3.5 items-center justify-center rounded-full text-[var(--accent-text)] hover:bg-[var(--accent)]/20 focus:ring-2 focus:ring-[var(--accent)] focus:outline-none"
           >
             <span className="text-[10px] leading-none">✕</span>
           </button>
@@ -63,7 +63,7 @@ export function ActiveFilters({
         type="button"
         id="reset-all-filters"
         onClick={onReset}
-        className="ml-2 text-xs font-medium text-[var(--text-muted)] underline decoration-dotted underline-offset-2 transition-colors hover:text-[var(--error)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+        className="ml-2 text-xs font-medium text-[var(--text-muted)] underline decoration-dotted underline-offset-2 transition-colors hover:text-[var(--error)] focus:ring-2 focus:ring-[var(--accent)] focus:outline-none"
         aria-label="Clear all filters"
       >
         Clear all

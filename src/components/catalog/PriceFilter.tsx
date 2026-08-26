@@ -26,14 +26,14 @@ export function PriceFilter({
 
   return (
     <fieldset className="border-none p-0">
-      <legend className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+      <legend className="text-xs font-semibold tracking-wider text-[var(--text-muted)] uppercase">
         Price Range
       </legend>
 
       <div className="mt-3 flex items-center gap-2">
         {/* Min input */}
         <div className="relative flex-1">
-          <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)]">
+          <span className="pointer-events-none absolute top-1/2 left-2.5 -translate-y-1/2 text-xs text-[var(--text-muted)]">
             $
           </span>
           <label htmlFor="price-min" className="sr-only">
@@ -48,11 +48,14 @@ export function PriceFilter({
             placeholder={String(datasetMin)}
             value={min ?? ""}
             onChange={(e) =>
-              onChange(e.target.value === "" ? null : Number(e.target.value), max)
+              onChange(
+                e.target.value === "" ? null : Number(e.target.value),
+                max,
+              )
             }
             aria-label="Minimum price"
             aria-invalid={isInvalidRange}
-            className={`w-full rounded-[var(--radius-sm)] border py-2 pl-6 pr-2 text-sm text-[var(--text-primary)] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-0 ${
+            className={`w-full rounded-[var(--radius-sm)] border py-2 pr-2 pl-6 text-sm text-[var(--text-primary)] transition-colors focus:ring-2 focus:ring-offset-0 focus:outline-none ${
               isInvalidRange
                 ? "border-[var(--error)] focus:ring-red-200"
                 : "border-[var(--border)] focus:border-[var(--accent)] focus:ring-[var(--accent-subtle)]"
@@ -60,13 +63,16 @@ export function PriceFilter({
           />
         </div>
 
-        <span className="text-[var(--text-muted)] text-xs select-none" aria-hidden="true">
+        <span
+          className="text-xs text-[var(--text-muted)] select-none"
+          aria-hidden="true"
+        >
           to
         </span>
 
         {/* Max input */}
         <div className="relative flex-1">
-          <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)]">
+          <span className="pointer-events-none absolute top-1/2 left-2.5 -translate-y-1/2 text-xs text-[var(--text-muted)]">
             $
           </span>
           <label htmlFor="price-max" className="sr-only">
@@ -81,11 +87,14 @@ export function PriceFilter({
             placeholder={String(datasetMax)}
             value={max ?? ""}
             onChange={(e) =>
-              onChange(min, e.target.value === "" ? null : Number(e.target.value))
+              onChange(
+                min,
+                e.target.value === "" ? null : Number(e.target.value),
+              )
             }
             aria-label="Maximum price"
             aria-invalid={isInvalidRange}
-            className={`w-full rounded-[var(--radius-sm)] border py-2 pl-6 pr-2 text-sm text-[var(--text-primary)] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-0 ${
+            className={`w-full rounded-[var(--radius-sm)] border py-2 pr-2 pl-6 text-sm text-[var(--text-primary)] transition-colors focus:ring-2 focus:ring-offset-0 focus:outline-none ${
               isInvalidRange
                 ? "border-[var(--error)] focus:ring-red-200"
                 : "border-[var(--border)] focus:border-[var(--accent)] focus:ring-[var(--accent-subtle)]"

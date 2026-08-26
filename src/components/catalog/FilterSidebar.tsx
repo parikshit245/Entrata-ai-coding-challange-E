@@ -53,7 +53,7 @@ export function FilterSidebar({
                 type="button"
                 id="sidebar-reset-filters"
                 onClick={onReset}
-                className="text-xs font-medium text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                className="text-xs font-medium text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:outline-none"
                 aria-label="Reset all filters"
               >
                 Reset all

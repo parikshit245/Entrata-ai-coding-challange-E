@@ -37,10 +37,20 @@ export function Pagination({
         disabled={currentPage === 1}
         aria-label="Go to previous page"
         aria-disabled={currentPage === 1}
-        className="flex items-center gap-1 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] shadow-sm transition-colors hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] disabled:pointer-events-none disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+        className="flex items-center gap-1 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] shadow-sm transition-colors hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] focus:ring-2 focus:ring-[var(--accent)] focus:outline-none disabled:pointer-events-none disabled:opacity-40"
       >
-        <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+        <svg
+          className="h-3.5 w-3.5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
         <span>Prev</span>
       </button>
@@ -63,7 +73,7 @@ export function Pagination({
               onClick={() => onPageChange(item)}
               aria-label={`Go to page ${item}`}
               aria-current={item === currentPage ? "page" : undefined}
-              className={`min-w-[32px] rounded-[var(--radius-sm)] px-2.5 py-1.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent)] ${
+              className={`min-w-[32px] rounded-[var(--radius-sm)] px-2.5 py-1.5 text-xs font-medium transition-colors focus:ring-2 focus:ring-[var(--accent)] focus:outline-none ${
                 item === currentPage
                   ? "bg-[var(--accent)] text-white shadow-sm"
                   : "border border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)]"
@@ -82,11 +92,21 @@ export function Pagination({
         disabled={currentPage === totalPages}
         aria-label="Go to next page"
         aria-disabled={currentPage === totalPages}
-        className="flex items-center gap-1 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] shadow-sm transition-colors hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] disabled:pointer-events-none disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+        className="flex items-center gap-1 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] shadow-sm transition-colors hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] focus:ring-2 focus:ring-[var(--accent)] focus:outline-none disabled:pointer-events-none disabled:opacity-40"
       >
         <span>Next</span>
-        <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+        <svg
+          className="h-3.5 w-3.5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </button>
     </nav>

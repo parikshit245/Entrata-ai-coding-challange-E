@@ -70,7 +70,7 @@ export function MobileFilterDrawer({
             id="mobile-filter-close"
             onClick={onClose}
             aria-label="Close filters panel"
-            className="flex h-7 w-7 items-center justify-center rounded-full text-[var(--text-muted)] transition-colors hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-[var(--text-muted)] transition-colors hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:outline-none"
           >
             <svg
               className="h-4 w-4"
@@ -122,7 +122,7 @@ export function MobileFilterDrawer({
                   onReset();
                   onClose();
                 }}
-                className="flex-1 rounded-[var(--radius-md)] border border-[var(--border-strong)] py-2.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-subtle)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                className="flex-1 rounded-[var(--radius-md)] border border-[var(--border-strong)] py-2.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-subtle)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:outline-none"
                 aria-label="Reset all filters"
               >
                 Reset
@@ -132,7 +132,7 @@ export function MobileFilterDrawer({
               type="button"
               id="mobile-filter-apply"
               onClick={onClose}
-              className="flex-1 rounded-[var(--radius-md)] bg-[var(--accent)] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2"
+              className="flex-1 rounded-[var(--radius-md)] bg-[var(--accent)] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--accent-hover)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:outline-none"
               aria-label="Apply filters and see results"
             >
               Show results

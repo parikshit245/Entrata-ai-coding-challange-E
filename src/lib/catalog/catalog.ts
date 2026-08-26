@@ -49,10 +49,7 @@ export function filterProducts(
     }
 
     // ── Min rating ──────────────────────────────────────────────────
-    if (
-      filters.minRating !== null &&
-      product.rating < filters.minRating
-    ) {
+    if (filters.minRating !== null && product.rating < filters.minRating) {
       return false;
     }
 
@@ -72,10 +69,7 @@ export function filterProducts(
  *
  * @pure — returns a new sorted array; does not mutate input
  */
-export function sortProducts(
-  products: Product[],
-  sort: SortOption,
-): Product[] {
+export function sortProducts(products: Product[], sort: SortOption): Product[] {
   // Slice so we never mutate the caller's reference
   const sorted = products.slice();
 
