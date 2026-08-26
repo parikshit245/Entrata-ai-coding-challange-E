@@ -1,5 +1,8 @@
 # 🛍️ LUMINA — High-Performance Product Catalog & Faceted Filter System
 
+🌐 **Live Demo:** [https://lumina-catalog.vercel.app/](https://lumina-catalog.vercel.app/)  
+📦 **Repository:** [https://github.com/parikshit245/Entrata-ai-coding-challange-E](https://github.com/parikshit245/Entrata-ai-coding-challange-E)
+
 An enterprise-grade, responsive e-commerce product catalog built with **Next.js 16 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS**. It features deterministic faceted filtering (multi-category, dynamic price range, rating threshold), multi-attribute sorting, state-preserving pagination, responsive mobile drawer controls, and an isolated pure business logic pipeline verified with **92 automated unit and integration tests**.
 
 ---
@@ -32,7 +35,7 @@ flowchart TD
     C --> D["Step 3: sortProducts<br/>Relevance, Price Asc/Desc, Rating, Name"]
     D --> E["Step 4: paginateProducts<br/>Window slicing + Page Clamping"]
     E --> F["Render CatalogPage<br/>ProductGrid, ActiveFilters, Pagination, Summary"]
-    
+
     subgraph StateManagement ["State Management"]
         Q["CatalogQuery State<br/>filters, sort, page, pageSize"] -->|useMemo| Pipeline["applyCatalogQuery"]
         Pipeline --> R["CatalogResult<br/>products, totalCount, totalPages, currentPage"]
@@ -134,20 +137,20 @@ Root Layout (src/app/layout.tsx)
 
 ## ✨ Key Features & Capabilities
 
-* **Multi-Select Category Filtering**: Choose one or multiple categories simultaneously (OR within categories, AND across other criteria).
-* **Price Range Boundaries**: Numeric minimum and maximum price inputs with instant error detection when `min > max`.
-* **Minimum Star Rating**: Toggleable minimum rating filter (4.5+, 4.0+, 3.5+, 3.0+) with rendered vector stars.
-* **Deterministic Sorting**:
-  * *Relevance* (Editorial default order)
-  * *Price: Low to High* / *Price: High to Low*
-  * *Highest Rated* (with review count secondary tie-breaker)
-  * *Name: A–Z* (alphabetical)
-* **Preserving State across Pagination**: Navigating between pages never discards active filters or sort options.
-* **Intelligent Page Clamping**: If applying a strict filter on page 4 reduces total pages to 1, the system automatically clamps to page 1 without breaking.
-* **Dismissible Active Filter Chips**: Real-time summary pills allowing one-click removal of individual filters or clearing all filters at once.
-* **Responsive Mobile Experience**: Dedicated slide-in filter drawer with blurred backdrop, native touch scrolling, and instant synchronization with the desktop view.
-* **High-Resolution Photography**: Optimized product cards with Unsplash image photography, category badges, and hover lift effects.
-* **Rich Zero-State Handling**: Context-aware empty state with a direct "Clear all filters" recovery action.
+- **Multi-Select Category Filtering**: Choose one or multiple categories simultaneously (OR within categories, AND across other criteria).
+- **Price Range Boundaries**: Numeric minimum and maximum price inputs with instant error detection when `min > max`.
+- **Minimum Star Rating**: Toggleable minimum rating filter (4.5+, 4.0+, 3.5+, 3.0+) with rendered vector stars.
+- **Deterministic Sorting**:
+  - _Relevance_ (Editorial default order)
+  - _Price: Low to High_ / _Price: High to Low_
+  - _Highest Rated_ (with review count secondary tie-breaker)
+  - _Name: A–Z_ (alphabetical)
+- **Preserving State across Pagination**: Navigating between pages never discards active filters or sort options.
+- **Intelligent Page Clamping**: If applying a strict filter on page 4 reduces total pages to 1, the system automatically clamps to page 1 without breaking.
+- **Dismissible Active Filter Chips**: Real-time summary pills allowing one-click removal of individual filters or clearing all filters at once.
+- **Responsive Mobile Experience**: Dedicated slide-in filter drawer with blurred backdrop, native touch scrolling, and instant synchronization with the desktop view.
+- **High-Resolution Photography**: Optimized product cards with Unsplash image photography, category badges, and hover lift effects.
+- **Rich Zero-State Handling**: Context-aware empty state with a direct "Clear all filters" recovery action.
 
 ---
 
@@ -180,15 +183,15 @@ export interface CatalogQuery {
 
 ## 🛠️ Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| **Next.js 16.3.3** | React Framework (App Router, Turbopack) |
-| **React 19.2.8** | UI Library & Hooks (`useMemo`, `useState`, `useCallback`) |
-| **TypeScript 5** | Static type safety and strict schema definitions |
-| **Tailwind CSS 4** | Design-token-driven utility styling |
-| **Vitest 4.1.11** | Unit & Integration test runner |
-| **ESLint 9** | Code quality & static linting |
-| **Prettier** | Code formatting |
+| Technology         | Purpose                                                   |
+| ------------------ | --------------------------------------------------------- |
+| **Next.js 16.3.3** | React Framework (App Router, Turbopack)                   |
+| **React 19.2.8**   | UI Library & Hooks (`useMemo`, `useState`, `useCallback`) |
+| **TypeScript 5**   | Static type safety and strict schema definitions          |
+| **Tailwind CSS 4** | Design-token-driven utility styling                       |
+| **Vitest 4.1.11**  | Unit & Integration test runner                            |
+| **ESLint 9**       | Code quality & static linting                             |
+| **Prettier**       | Code formatting                                           |
 
 ---
 
@@ -245,8 +248,8 @@ product-catalog-challenge/
 
 ### Prerequisites
 
-* **Node.js**: v18.18.0 or higher (v20+ recommended)
-* **npm**: v9+ or **pnpm** / **yarn** / **bun**
+- **Node.js**: v18.18.0 or higher (v20+ recommended)
+- **npm**: v9+ or **pnpm** / **yarn** / **bun**
 
 ### 1. Clone the Repository
 
@@ -280,15 +283,15 @@ npm start
 
 ## 📜 Available Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Starts Next.js development server with Turbopack |
-| `npm run build` | Builds optimized production bundle |
-| `npm start` | Runs the production server |
-| `npm test` | Runs the full Vitest suite (92 tests) in headless mode |
-| `npm run lint` | Runs ESLint across all source files |
-| `npm run typecheck` | Validates TypeScript with `tsc --noEmit` |
-| `npm run format` | Formats all code using Prettier with Tailwind sorting |
+| Command             | Description                                            |
+| ------------------- | ------------------------------------------------------ |
+| `npm run dev`       | Starts Next.js development server with Turbopack       |
+| `npm run build`     | Builds optimized production bundle                     |
+| `npm start`         | Runs the production server                             |
+| `npm test`          | Runs the full Vitest suite (92 tests) in headless mode |
+| `npm run lint`      | Runs ESLint across all source files                    |
+| `npm run typecheck` | Validates TypeScript with `tsc --noEmit`               |
+| `npm run format`    | Formats all code using Prettier with Tailwind sorting  |
 
 ---
 
@@ -332,15 +335,15 @@ npm test
 
 ## ♿ Design System & Accessibility
 
-* **WCAG Contrast Compliant**: All color pairs (text on background, badge text on tint) meet or exceed WCAG AA contrast standards.
-* **Vector Iconography**: Pure scalable vector SVGs across all components (no blurry emoji characters).
-* **Keyboard Navigation**: Native HTML inputs (`checkbox`, `radio`, `select`, `button`) with accessible `:focus-visible` rings.
-* **Screen Reader Live Regions**:
-  * `aria-live="polite"` on results counter and active filter badges.
-  * `role="dialog"` with `aria-modal="true"` on the mobile filter drawer.
-  * `role="alert"` with `aria-invalid` on price range validation errors.
-  * `aria-current="page"` on active pagination buttons.
-* **Reduced Motion**: Honored via `@media (prefers-reduced-motion: reduce)` in `globals.css`.
+- **WCAG Contrast Compliant**: All color pairs (text on background, badge text on tint) meet or exceed WCAG AA contrast standards.
+- **Vector Iconography**: Pure scalable vector SVGs across all components (no blurry emoji characters).
+- **Keyboard Navigation**: Native HTML inputs (`checkbox`, `radio`, `select`, `button`) with accessible `:focus-visible` rings.
+- **Screen Reader Live Regions**:
+  - `aria-live="polite"` on results counter and active filter badges.
+  - `role="dialog"` with `aria-modal="true"` on the mobile filter drawer.
+  - `role="alert"` with `aria-invalid` on price range validation errors.
+  - `aria-current="page"` on active pagination buttons.
+- **Reduced Motion**: Honored via `@media (prefers-reduced-motion: reduce)` in `globals.css`.
 
 ---
 
