@@ -93,7 +93,7 @@ export const PRODUCTS: Product[] = [
     price: 119.99,
     rating: 4.0,
     reviewCount: 876,
-    imageUrl: "https://images.unsplash.com/photo-1622445262464-84b1456045b6?w=600&auto=format&fit=crop&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600&auto=format&fit=crop&q=80",
     description:
       "12-in-1 USB-C hub with dual HDMI (4K@60Hz), 100W PD, Gigabit Ethernet, SD/microSD, and 4× USB-A.",
   },
