@@ -1,7 +1,7 @@
 # 🛍️ LUMINA — High-Performance Product Catalog & Faceted Filter System
 
 🌐 **Live Demo:** [https://lumina-catalog.vercel.app/](https://lumina-catalog.vercel.app/)  
-📦 **Repository:** [https://github.com/parikshit245/Entrata-ai-coding-challange-E](https://github.com/parikshit245/Entrata-ai-coding-challange-Task-1)
+📦 **Repository:** [https://github.com/parikshit245/Entrata-ai-coding-challange-Task-1](https://github.com/parikshit245/Entrata-ai-coding-challange-Task-1)
 
 An enterprise-grade, responsive e-commerce product catalog built with **Next.js 16 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS**. It features deterministic faceted filtering (multi-category, dynamic price range, rating threshold), multi-attribute sorting, state-preserving pagination, responsive mobile drawer controls, and an isolated pure business logic pipeline verified with **92 automated unit and integration tests**.
 
